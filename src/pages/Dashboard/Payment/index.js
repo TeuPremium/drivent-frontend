@@ -26,9 +26,20 @@ export default function Payment() {
       <Header>Ingresso e pagamento</Header>
 
       <TextRow>Primeiro, escolha sua modalidade de ingresso</TextRow>
-      <Container backgroundColor={color}>
-        <TextContainer>'Pagamento: Em brevers!'</TextContainer>
-      </Container>
+      <HorizontalContainer>
+        <Container backgroundColor={color}>
+          <TextContainer>
+            <h1>Presencial</h1>
+            <h2>R$ 250</h2>
+          </TextContainer>
+        </Container>
+        <Container backgroundColor={color}>
+          <TextContainer>
+            <h1>Online</h1>
+            <h2>R$ 100</h2>
+          </TextContainer>
+        </Container>
+      </HorizontalContainer>
     </>
   );
 }
@@ -51,6 +62,22 @@ const Container = styled.div`
 
 const TextContainer = styled.div`
   height: 38px;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  h1 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #454545;
+  }
+  h2 {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 16px;
+    color: #898989;
+  }
 `;
 
 const Header = styled.div`
@@ -67,6 +94,15 @@ const TextRow = styled.div`
   font-weight: 400;
   font-size: 20px;
   line-height: 23px;
-
+  margin-top: 37px;
   color: #8e8e8e;
+`;
+
+const HorizontalContainer = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 17px;
+  div:nth-of-type(2) {
+    margin-left: 24px;
+  }
 `;
