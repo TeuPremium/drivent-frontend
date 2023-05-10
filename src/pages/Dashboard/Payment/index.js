@@ -1,5 +1,5 @@
-import RoomButton from '../../../components/RoomButton/RoomButton';
+import PaymentFlow from '../../../components/PaymentFlow';
 
 export default function Payment() {
-  return <RoomButton />;
+  return <PaymentFlow />;
 }
