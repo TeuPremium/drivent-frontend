@@ -6,6 +6,7 @@ export default function ChoiceBtn(prop) {
   function changeColor() {
     color === '#FFEED2' ? setColor('') : setColor('#FFEED2');
   }
+
   return (
     <>
       <Container backgroundColor={color} onClick={() => changeColor()}>
@@ -16,8 +17,6 @@ export default function ChoiceBtn(prop) {
       </Container>
     </>
   );
-
-  return <></>;
 }
 
 const Container = styled.div`
