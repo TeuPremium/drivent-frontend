@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import instance from '../../../services/api';
 import useToken from '../../../hooks/useToken';
+import ChoiceBtn from './ChoiceBtn';
+
 export default function Payment() {
   const [color, setColor] = useState('#FFEED2');
   const [ticketTypes, setTicketTypes] = useState([]);
@@ -33,8 +35,7 @@ export default function Payment() {
     promise.catch((error) => alert('An error occured while trying to fetch the posts, please refresh the page'));
   }, []);
 
-  // console.log(ticketTypes);
-  console.log(enrollments);
+  console.log(ticketTypes);
 
   if (!enrollments.data) {
     return (
@@ -53,34 +54,14 @@ export default function Payment() {
 
       <TextRow>Primeiro, escolha sua modalidade de ingresso</TextRow>
       <HorizontalContainer>
-        <Container backgroundColor={color}>
-          <TextContainer>
-            <h1>Presencial</h1>
-            <h2>R$ 250</h2>
-          </TextContainer>
-        </Container>
-        <Container backgroundColor={color}>
-          <TextContainer>
-            <h1>Online</h1>
-            <h2>R$ 100</h2>
-          </TextContainer>
-        </Container>
+        <ChoiceBtn name={'presencial'} price={'R$ 250'} />
+        <ChoiceBtn name={'Online'} price={'R$ 100'} />
       </HorizontalContainer>
 
       <TextRow>Ótimo! Agora escolha sua modalidade de hospedagem</TextRow>
       <HorizontalContainer>
-        <Container backgroundColor={color}>
-          <TextContainer>
-            <h1>Sem Hotel</h1>
-            <h2>+ R$ 0</h2>
-          </TextContainer>
-        </Container>
-        <Container backgroundColor={color}>
-          <TextContainer>
-            <h1>Com Hotel</h1>
-            <h2>+ R$ 100</h2>
-          </TextContainer>
-        </Container>
+        <ChoiceBtn name={'Sem Hotel'} price={'+ R$ 0'} />
+        <ChoiceBtn name={'Com Hotel'} price={'+ R$ 100'} />
       </HorizontalContainer>
 
       <TextRow>Fechado! O total ficou em R$ 600. Agora é só confirmar:</TextRow>
