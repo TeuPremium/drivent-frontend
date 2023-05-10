@@ -82,6 +82,10 @@ export default function Payment() {
           </TextContainer>
         </Container>
       </HorizontalContainer>
+
+      <TextRow>Fechado! O total ficou em R$ 600. Agora é só confirmar:</TextRow>
+
+      <Button>RESERVAR INGRESSO</Button>
     </>
   );
 }
@@ -161,4 +165,16 @@ const EnrollmentRequired = styled.div`
   position: relative;
   top: 37%;
   margin: auto;
+`;
+
+const Button = styled.button`
+  width: 162px;
+  height: 37px;
+  left: 335px;
+  top: 749px;
+  background: #e0e0e0;
+  border: none;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  margin-top: 25px;
 `;
