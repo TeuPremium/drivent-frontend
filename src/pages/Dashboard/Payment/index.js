@@ -5,6 +5,8 @@ import useToken from '../../../hooks/useToken';
 export default function Payment() {
   const [color, setColor] = useState('#FFEED2');
   const [ticketTypes, setTicketTypes] = useState([]);
+  const [enrollments, setEnrollments] = useState([]);
+
   const token = useToken();
 
   useEffect(() => {
@@ -19,7 +21,30 @@ export default function Payment() {
     promise.catch((error) => alert('An error occured while trying to fetch the posts, please refresh the page'));
   }, []);
 
-  console.log(ticketTypes);
+  useEffect(() => {
+    const promise = instance.get('/enrollments', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    promise.then((e) => {
+      setEnrollments(e);
+    });
+    promise.catch((error) => alert('An error occured while trying to fetch the posts, please refresh the page'));
+  }, []);
+
+  // console.log(ticketTypes);
+
+  if (!enrollments) {
+    return (
+      <>
+        <Header>Ingresso e pagamento</Header>
+        <EnrollmentRequired>
+          <div>Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso</div>
+        </EnrollmentRequired>
+      </>
+    );
+  }
 
   return (
     <>
@@ -105,4 +130,18 @@ const HorizontalContainer = styled.div`
   div:nth-of-type(2) {
     margin-left: 24px;
   }
+`;
+
+const EnrollmentRequired = styled.div`
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  margin-top: 37px;
+  color: #8e8e8e;
+  width: 400px;
+  position: relative;
+  top: 37%;
+  margin: auto;
 `;
