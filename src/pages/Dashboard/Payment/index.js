@@ -65,6 +65,22 @@ export default function Payment() {
           </TextContainer>
         </Container>
       </HorizontalContainer>
+
+      <TextRow>Ótimo! Agora escolha sua modalidade de hospedagem</TextRow>
+      <HorizontalContainer>
+        <Container backgroundColor={color}>
+          <TextContainer>
+            <h1>Sem Hotel</h1>
+            <h2>+ R$ 0</h2>
+          </TextContainer>
+        </Container>
+        <Container backgroundColor={color}>
+          <TextContainer>
+            <h1>Com Hotel</h1>
+            <h2>+ R$ 100</h2>
+          </TextContainer>
+        </Container>
+      </HorizontalContainer>
     </>
   );
 }
