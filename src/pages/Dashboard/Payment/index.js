@@ -34,8 +34,9 @@ export default function Payment() {
   }, []);
 
   // console.log(ticketTypes);
+  console.log(enrollments);
 
-  if (!enrollments) {
+  if (!enrollments.data) {
     return (
       <>
         <Header>Ingresso e pagamento</Header>
