@@ -1,11 +1,7 @@
-import api from './api';
+import api, { authorization } from './api';
 
 export async function save(body, token) {
-  const response = await api.post('/enrollments', body, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await api.post('/enrollments', body, authorization(token));
 
   return response.data;
 }

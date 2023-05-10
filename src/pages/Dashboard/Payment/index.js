@@ -1,8 +1,11 @@
+import PaymentFlow from '../../../components/PaymentFlow';
+
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import instance from '../../../services/api';
 import useToken from '../../../hooks/useToken';
 export default function Payment() {
+  return <PaymentFlow />;
   const [color, setColor] = useState('#FFEED2');
   const [ticketTypes, setTicketTypes] = useState([]);
   const [enrollments, setEnrollments] = useState([]);
