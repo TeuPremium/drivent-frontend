@@ -57,7 +57,7 @@ export default function SelectTicketType() {
   function setTicket(ticketType) {
     setTotal(ticketType.price);
     setSelectedTypeId(ticketType.id);
-    console.log(selectedTypeId);
+    // console.log(selectedTypeId);
   }
 
   function submitOption() {
