@@ -35,8 +35,6 @@ export default function SelectTicketType() {
     hideRow === 'none' ? setHideRow('') : setHideRow('none');
   }
 
-  function toggleTotal() {}
-
   function registerOption(index) {
     if (index === 0) {
       selectedOptions[0] ? setSelectedOptions(['', '', '', '', 0]) : setSelectedOptions(['#FFEED2', '', '', '', 0]);
@@ -59,11 +57,13 @@ export default function SelectTicketType() {
   function setTicket(ticketType) {
     setTotal(ticketType.price);
     setSelectedTypeId(ticketType.id);
-    console.log(total);
     console.log(selectedTypeId);
   }
 
-  function submitOption() {}
+  function submitOption() {
+    //colocar aqui a funcao pra dar submit nas informacoes do ticket escolhido
+    //as informacoes estao salvas nos useState do TOTAL e do selectedTypeId
+  }
 
   if (!ticketTypes.data) {
     return (
@@ -128,7 +128,7 @@ export default function SelectTicketType() {
       <BottomRow display={hideTotal}>
         <TextRow>Fechado! O total ficou em R$ {total}. Agora é só confirmar:</TextRow>
 
-        <Button>RESERVAR INGRESSO</Button>
+        <Button onClick={submitOption()}>RESERVAR INGRESSO</Button>
       </BottomRow>
     </>
   );
