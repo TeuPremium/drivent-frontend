@@ -7,7 +7,6 @@ import useToken from '../../../hooks/useToken';
 export default function SelectTicketType() {
   // eslint-disable-next-line no-unused-vars
   const [ticketTypes, setTicketTypes] = useState([]);
-  const [enrollment, setEnrollment] = useState([]);
   const [hideRow, setHideRow] = useState('none');
   const [hideTotal, sethideTotal] = useState('none');
 
@@ -25,32 +24,9 @@ export default function SelectTicketType() {
     promise.catch((error) => alert('An error occured while trying to fetch the posts, please refresh the page'));
   }, []);
 
-  useEffect(() => {
-    const promise = instance.get('/enrollments', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    promise.then((e) => {
-      setEnrollment(e);
-    });
-    promise.catch((error) => alert('An error occured while trying to fetch the posts, please refresh the page'));
-  }, []);
-
   // console.log(ticketTypes);
   function toggleRow() {
     hideRow === 'none' ? setHideRow('') : setHideRow('none');
-  }
-
-  if (!enrollment.data) {
-    return (
-      <>
-        <Header>Ingresso e pagamento</Header>
-        <EnrollmentRequired>
-          <div>Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso</div>
-        </EnrollmentRequired>
-      </>
-    );
   }
 
   return (
@@ -133,19 +109,19 @@ const HorizontalContainer = styled.div`
   }
 `;
 
-const EnrollmentRequired = styled.div`
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 23px;
-  margin-top: 37px;
-  color: #8e8e8e;
-  width: 400px;
-  position: relative;
-  top: 37%;
-  margin: auto;
-`;
+// const EnrollmentRequired = styled.div`
+//   font-family: 'Roboto', sans-serif;
+//   font-style: normal;
+//   font-weight: 400;
+//   font-size: 20px;
+//   line-height: 23px;
+//   margin-top: 37px;
+//   color: #8e8e8e;
+//   width: 400px;
+//   position: relative;
+//   top: 37%;
+//   margin: auto;
+// `;
 
 const Button = styled.button`
   width: 162px;
