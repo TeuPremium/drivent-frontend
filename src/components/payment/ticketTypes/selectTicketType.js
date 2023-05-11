@@ -10,7 +10,7 @@ export default function SelectTicketType() {
   const [hideRow, setHideRow] = useState('none');
   const [hideTotal, sethideTotal] = useState('none');
   const token = useToken();
-  const [selectedOptions, setSelectedOptions] = useState(['', '', '', '']);
+  const [selectedOptions, setSelectedOptions] = useState(['', '', '', '', 0]);
 
   useEffect(() => {
     const promise = instance.get('/tickets/types', {
@@ -24,29 +24,36 @@ export default function SelectTicketType() {
     promise.catch((error) => alert('An error occured while trying to fetch the posts, please refresh the page'));
   }, []);
 
-  // console.log(ticketTypes);
   function toggleRow() {
     hideRow === 'none' ? setHideRow('') : setHideRow('none');
   }
 
-  function register(index) {
+  function toggleTotal() {
+    console.log(hideTotal);
+    hideTotal ? sethideTotal('') : sethideTotal('none');
+  }
+
+  function registerOption(index) {
     if (index == 0) {
-      selectedOptions[0] ? setSelectedOptions(['', '', '', '']) : setSelectedOptions(['#FFEED2', '', '', '']);
+      selectedOptions[0] ? setSelectedOptions(['', '', '', '', 0]) : setSelectedOptions(['#FFEED2', '', '', '', 0]);
     }
     if (index == 1) {
-      selectedOptions[1] ? setSelectedOptions(['', '', '', '']) : setSelectedOptions(['', '#FFEED2', '', '']);
+      selectedOptions[1] ? setSelectedOptions(['', '', '', '', 0]) : setSelectedOptions(['', '#FFEED2', '', '', 1]);
     }
     if (index == 2) {
       selectedOptions[2]
-        ? setSelectedOptions(['#FFEED2', '', '', ''])
-        : setSelectedOptions(['#FFEED2', '', '#FFEED2', '']);
+        ? setSelectedOptions(['#FFEED2', '', '', '', 0])
+        : setSelectedOptions(['#FFEED2', '', '#FFEED2', '', 2]);
     }
     if (index == 3) {
       selectedOptions[3]
-        ? setSelectedOptions(['#FFEED2', '', '', ''])
-        : setSelectedOptions(['#FFEED2', '', '', '#FFEED2']);
+        ? setSelectedOptions(['#FFEED2', '', '', '', 0])
+        : setSelectedOptions(['#FFEED2', '', '', '#FFEED2', 2]);
     }
   }
+
+  console.log(ticketTypes.data);
+  function submitOption() {}
 
   return (
     <>
@@ -57,7 +64,7 @@ export default function SelectTicketType() {
         <div
           style={{ background: selectedOptions[0], borderRadius: '24px' }}
           onClick={() => {
-            register(0);
+            registerOption(0);
             toggleRow();
             sethideTotal('none');
           }}
@@ -67,9 +74,9 @@ export default function SelectTicketType() {
         <div
           style={{ background: selectedOptions[1], borderRadius: '24px' }}
           onClick={() => {
-            register(1);
+            registerOption(1);
             setHideRow('none');
-            sethideTotal('');
+            toggleTotal();
           }}
         >
           <ChoiceBtn selected={selectedOptions[1]} name={'Online'} price={'R$ 100'} />
@@ -82,8 +89,8 @@ export default function SelectTicketType() {
           <div
             style={{ background: selectedOptions[2], borderRadius: '24px' }}
             onClick={() => {
-              register(2);
-              sethideTotal('');
+              registerOption(2);
+              toggleTotal();
             }}
           >
             <ChoiceBtn selected={selectedOptions[2]} name={'Sem Hotel'} price={'+ R$ 0'} />
@@ -91,8 +98,8 @@ export default function SelectTicketType() {
           <div
             style={{ background: selectedOptions[3], borderRadius: '24px' }}
             onClick={() => {
-              register(3);
-              sethideTotal('');
+              registerOption(3);
+              toggleTotal('');
             }}
           >
             <ChoiceBtn selected={selectedOptions[3]} name={'Com Hotel'} price={'+ R$ 100'} />
