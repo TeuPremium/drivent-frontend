@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import instance from '../../services/api';
+import instance from '../../../services/api';
 import ChoiceBtn from './ChoiceBtn';
-import useToken from '../../hooks/useToken';
+import useToken from '../../../hooks/useToken';
 
 export default function SelectTicketType() {
   // eslint-disable-next-line no-unused-vars
