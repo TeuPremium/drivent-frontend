@@ -10,6 +10,11 @@ export default function SelectTicketType() {
   const [ticketTypes, setTicketTypes] = useState([]);
   const [hideRow, setHideRow] = useState('none');
   const [hideTotal, sethideTotal] = useState('none');
+
+  //total e selectTypeid sao os dados referentes ao ticket selecionado para checkout
+  const [total, setTotal] = useState(0);
+  const [selectedTypeId, setSelectedTypeId] = useState(0);
+
   const token = useToken();
   //selected options contem a cor dos botoes selecionados e o indice do item selecionado
   const [selectedOptions, setSelectedOptions] = useState(['', '', '', '', 0]);
@@ -51,8 +56,15 @@ export default function SelectTicketType() {
     }
   }
 
-  console.log(!ticketTypes.data);
+  function setTicket(ticketType) {
+    setTotal(ticketType.price);
+    setSelectedTypeId(ticketType.id);
+    console.log(total);
+    console.log(selectedTypeId);
+  }
+
   function submitOption() {}
+
   if (!ticketTypes.data) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', margin: '20%' }}>
@@ -62,8 +74,6 @@ export default function SelectTicketType() {
   }
   return (
     <>
-      <Header>Ingresso e pagamento</Header>
-
       <TextRow>Primeiro, escolha sua modalidade de ingresso</TextRow>
       <HorizontalContainer>
         <div
@@ -82,6 +92,7 @@ export default function SelectTicketType() {
             registerOption(1);
             setHideRow('none');
             sethideTotal('');
+            setTicket(ticketTypes.data[0]);
           }}
         >
           <ChoiceBtn ticket={ticketTypes.data[0]} />
@@ -96,6 +107,7 @@ export default function SelectTicketType() {
             onClick={() => {
               registerOption(2);
               sethideTotal('');
+              setTicket(ticketTypes.data[1]);
             }}
           >
             <ChoiceBtn ticket={ticketTypes.data[1]} lowPriceTicket={ticketTypes.data[1].price} lowerOption={true} />
@@ -105,6 +117,7 @@ export default function SelectTicketType() {
             onClick={() => {
               registerOption(3);
               sethideTotal('');
+              setTicket(ticketTypes.data[2]);
             }}
           >
             <ChoiceBtn ticket={ticketTypes.data[2]} lowPriceTicket={ticketTypes.data[1].price} lowerOption={true} />
@@ -113,21 +126,13 @@ export default function SelectTicketType() {
       </BottomRow>
 
       <BottomRow display={hideTotal}>
-        <TextRow>Fechado! O total ficou em R$ 600. Agora é só confirmar:</TextRow>
+        <TextRow>Fechado! O total ficou em R$ {total}. Agora é só confirmar:</TextRow>
 
         <Button>RESERVAR INGRESSO</Button>
       </BottomRow>
     </>
   );
 }
-
-const Header = styled.div`
-  font-family: 'Roboto', sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 34px;
-  line-height: 40px;
-`;
 
 const TextRow = styled.div`
   font-family: 'Roboto', sans-serif;
@@ -147,20 +152,6 @@ const HorizontalContainer = styled.div`
     margin-left: 24px;
   }
 `;
-
-// const EnrollmentRequired = styled.div`
-//   font-family: 'Roboto', sans-serif;
-//   font-style: normal;
-//   font-weight: 400;
-//   font-size: 20px;
-//   line-height: 23px;
-//   margin-top: 37px;
-//   color: #8e8e8e;
-//   width: 400px;
-//   position: relative;
-//   top: 37%;
-//   margin: auto;
-// `;
 
 const Button = styled.button`
   width: 162px;
