@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import instance from '../../../services/api';
 import ChoiceBtn from './ChoiceBtn';
 import useToken from '../../../hooks/useToken';
+import ReactLoading from 'react-loading';
 
 export default function SelectTicketType() {
   // eslint-disable-next-line no-unused-vars
@@ -10,6 +11,7 @@ export default function SelectTicketType() {
   const [hideRow, setHideRow] = useState('none');
   const [hideTotal, sethideTotal] = useState('none');
   const token = useToken();
+  //selected options contem a cor dos botoes selecionados e o indice do item selecionado
   const [selectedOptions, setSelectedOptions] = useState(['', '', '', '', 0]);
 
   useEffect(() => {
@@ -28,33 +30,36 @@ export default function SelectTicketType() {
     hideRow === 'none' ? setHideRow('') : setHideRow('none');
   }
 
-  function toggleTotal() {
-    console.log(hideTotal);
-    hideTotal ? sethideTotal('') : sethideTotal('none');
-  }
+  function toggleTotal() {}
 
   function registerOption(index) {
-    if (index == 0) {
+    if (index === 0) {
       selectedOptions[0] ? setSelectedOptions(['', '', '', '', 0]) : setSelectedOptions(['#FFEED2', '', '', '', 0]);
     }
-    if (index == 1) {
+    if (index === 1) {
       selectedOptions[1] ? setSelectedOptions(['', '', '', '', 0]) : setSelectedOptions(['', '#FFEED2', '', '', 1]);
     }
-    if (index == 2) {
+    if (index === 2) {
       selectedOptions[2]
         ? setSelectedOptions(['#FFEED2', '', '', '', 0])
         : setSelectedOptions(['#FFEED2', '', '#FFEED2', '', 2]);
     }
-    if (index == 3) {
+    if (index === 3) {
       selectedOptions[3]
         ? setSelectedOptions(['#FFEED2', '', '', '', 0])
         : setSelectedOptions(['#FFEED2', '', '', '#FFEED2', 2]);
     }
   }
 
-  console.log(ticketTypes.data);
+  console.log(!ticketTypes.data);
   function submitOption() {}
-
+  if (!ticketTypes.data) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', margin: '20%' }}>
+        <ReactLoading type="bubbles" color="#000000" height={200} width={200} />
+      </div>
+    );
+  }
   return (
     <>
       <Header>Ingresso e pagamento</Header>
@@ -69,17 +74,17 @@ export default function SelectTicketType() {
             sethideTotal('none');
           }}
         >
-          <ChoiceBtn name={'Presencial'} price={'R$ 250'} />
+          <ChoiceBtn ticket={ticketTypes.data[1]} name={'presencial'} />
         </div>
         <div
           style={{ background: selectedOptions[1], borderRadius: '24px' }}
           onClick={() => {
             registerOption(1);
             setHideRow('none');
-            toggleTotal();
+            sethideTotal('');
           }}
         >
-          <ChoiceBtn selected={selectedOptions[1]} name={'Online'} price={'R$ 100'} />
+          <ChoiceBtn ticket={ticketTypes.data[0]} />
         </div>
       </HorizontalContainer>
 
@@ -90,19 +95,19 @@ export default function SelectTicketType() {
             style={{ background: selectedOptions[2], borderRadius: '24px' }}
             onClick={() => {
               registerOption(2);
-              toggleTotal();
+              sethideTotal('');
             }}
           >
-            <ChoiceBtn selected={selectedOptions[2]} name={'Sem Hotel'} price={'+ R$ 0'} />
+            <ChoiceBtn ticket={ticketTypes.data[1]} lowPriceTicket={ticketTypes.data[1].price} lowerOption={true} />
           </div>
           <div
             style={{ background: selectedOptions[3], borderRadius: '24px' }}
             onClick={() => {
               registerOption(3);
-              toggleTotal('');
+              sethideTotal('');
             }}
           >
-            <ChoiceBtn selected={selectedOptions[3]} name={'Com Hotel'} price={'+ R$ 100'} />
+            <ChoiceBtn ticket={ticketTypes.data[2]} lowPriceTicket={ticketTypes.data[1].price} lowerOption={true} />
           </div>
         </HorizontalContainer>
       </BottomRow>

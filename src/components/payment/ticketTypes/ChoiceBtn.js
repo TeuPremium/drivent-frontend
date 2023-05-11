@@ -1,18 +1,29 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 
 export default function ChoiceBtn(prop) {
-  function changeColor() {
-    // prop.selected ? setColor('') : setColor('#FFEED2');
+  const name = prop.name || prop.ticket.name;
+
+  if (!prop.ticket) {
+    return (
+      <>
+        <Container>
+          <TextContainer>
+            <h1>{'ticket unavailable, try refreshing'}</h1>
+          </TextContainer>
+        </Container>
+      </>
+    );
   }
-  const color = prop.selected;
 
   return (
     <>
-      <Container backgroundColor={color} onClick={() => changeColor()}>
+      <Container>
         <TextContainer>
-          <h1>{prop.name}</h1>
-          <h2>{prop.price}</h2>
+          <h1>{name}</h1>
+          <h2>
+            {prop.lowerOption ? '+ ' : ''}R${' '}
+            {prop.lowPriceTicket ? prop.ticket.price - prop.lowPriceTicket : prop.ticket.price}
+          </h2>
         </TextContainer>
       </Container>
     </>
