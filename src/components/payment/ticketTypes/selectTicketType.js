@@ -8,9 +8,8 @@ import ReactLoading from 'react-loading';
 export default function SelectTicketType(prop) {
   // eslint-disable-next-line no-unused-vars
 
-  console.log(prop);
+  const ticketTypes = prop.ticketType;
 
-  const [ticketTypes, setTicketTypes] = useState([]);
   const [hideRow, setHideRow] = useState('none');
   const [hideTotal, sethideTotal] = useState('none');
 
@@ -21,18 +20,6 @@ export default function SelectTicketType(prop) {
   const token = useToken();
   //selected options contem a cor dos botoes selecionados e o indice do item selecionado
   const [selectedOptions, setSelectedOptions] = useState(['', '', '', '', 0]);
-
-  useEffect(() => {
-    const promise = instance.get('/tickets/types', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    promise.then((e) => {
-      setTicketTypes(e);
-    });
-    promise.catch((error) => alert('An error occured while trying to fetch the posts, please refresh the page'));
-  }, []);
 
   function toggleRow() {
     hideRow === 'none' ? setHideRow('') : setHideRow('none');
@@ -68,7 +55,7 @@ export default function SelectTicketType(prop) {
     //as informacoes estao salvas nos useState do TOTAL e do selectedTypeId
   }
 
-  if (!ticketTypes.data) {
+  if (!ticketTypes) {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', margin: '20%' }}>
         <ReactLoading type="bubbles" color="#000000" height={200} width={200} />
@@ -87,7 +74,7 @@ export default function SelectTicketType(prop) {
             sethideTotal('none');
           }}
         >
-          <ChoiceBtn ticket={ticketTypes.data[1]} name={'presencial'} />
+          <ChoiceBtn ticket={ticketTypes[1]} name={'presencial'} />
         </div>
         <div
           style={{ background: selectedOptions[1], borderRadius: '24px' }}
@@ -95,10 +82,10 @@ export default function SelectTicketType(prop) {
             registerOption(1);
             setHideRow('none');
             sethideTotal('');
-            setTicket(ticketTypes.data[0]);
+            setTicket(ticketTypes[0]);
           }}
         >
-          <ChoiceBtn ticket={ticketTypes.data[0]} />
+          <ChoiceBtn ticket={ticketTypes[0]} />
         </div>
       </HorizontalContainer>
 
@@ -110,20 +97,20 @@ export default function SelectTicketType(prop) {
             onClick={() => {
               registerOption(2);
               sethideTotal('');
-              setTicket(ticketTypes.data[1]);
+              setTicket(ticketTypes[1]);
             }}
           >
-            <ChoiceBtn ticket={ticketTypes.data[1]} lowPriceTicket={ticketTypes.data[1].price} lowerOption={true} />
+            <ChoiceBtn ticket={ticketTypes[1]} lowPriceTicket={ticketTypes[1].price} lowerOption={true} />
           </div>
           <div
             style={{ background: selectedOptions[3], borderRadius: '24px' }}
             onClick={() => {
               registerOption(3);
               sethideTotal('');
-              setTicket(ticketTypes.data[2]);
+              setTicket(ticketTypes[2]);
             }}
           >
-            <ChoiceBtn ticket={ticketTypes.data[2]} lowPriceTicket={ticketTypes.data[1].price} lowerOption={true} />
+            <ChoiceBtn ticket={ticketTypes[2]} lowPriceTicket={ticketTypes[1].price} lowerOption={true} />
           </div>
         </HorizontalContainer>
       </BottomRow>
