@@ -9,8 +9,8 @@ export default function SelectTicketType() {
   const [ticketTypes, setTicketTypes] = useState([]);
   const [hideRow, setHideRow] = useState('none');
   const [hideTotal, sethideTotal] = useState('none');
-
   const token = useToken();
+  const [selectedOptions, setSelectedOptions] = useState(['', '', '', '']);
 
   useEffect(() => {
     const promise = instance.get('/tickets/types', {
@@ -29,6 +29,25 @@ export default function SelectTicketType() {
     hideRow === 'none' ? setHideRow('') : setHideRow('none');
   }
 
+  function register(index) {
+    if (index == 0) {
+      selectedOptions[0] ? setSelectedOptions(['', '', '', '']) : setSelectedOptions(['#FFEED2', '', '', '']);
+    }
+    if (index == 1) {
+      selectedOptions[1] ? setSelectedOptions(['', '', '', '']) : setSelectedOptions(['', '#FFEED2', '', '']);
+    }
+    if (index == 2) {
+      selectedOptions[2]
+        ? setSelectedOptions(['#FFEED2', '', '', ''])
+        : setSelectedOptions(['#FFEED2', '', '#FFEED2', '']);
+    }
+    if (index == 3) {
+      selectedOptions[3]
+        ? setSelectedOptions(['#FFEED2', '', '', ''])
+        : setSelectedOptions(['#FFEED2', '', '', '#FFEED2']);
+    }
+  }
+
   return (
     <>
       <Header>Ingresso e pagamento</Header>
@@ -36,7 +55,9 @@ export default function SelectTicketType() {
       <TextRow>Primeiro, escolha sua modalidade de ingresso</TextRow>
       <HorizontalContainer>
         <div
+          style={{ background: selectedOptions[0], borderRadius: '24px' }}
           onClick={() => {
+            register(0);
             toggleRow();
             sethideTotal('none');
           }}
@@ -44,12 +65,14 @@ export default function SelectTicketType() {
           <ChoiceBtn name={'Presencial'} price={'R$ 250'} />
         </div>
         <div
+          style={{ background: selectedOptions[1], borderRadius: '24px' }}
           onClick={() => {
+            register(1);
             setHideRow('none');
             sethideTotal('');
           }}
         >
-          <ChoiceBtn name={'Online'} price={'R$ 100'} />
+          <ChoiceBtn selected={selectedOptions[1]} name={'Online'} price={'R$ 100'} />
         </div>
       </HorizontalContainer>
 
@@ -57,18 +80,22 @@ export default function SelectTicketType() {
         <TextRow>Ótimo! Agora escolha sua modalidade de hospedagem</TextRow>
         <HorizontalContainer>
           <div
+            style={{ background: selectedOptions[2], borderRadius: '24px' }}
             onClick={() => {
+              register(2);
               sethideTotal('');
             }}
           >
-            <ChoiceBtn name={'Sem Hotel'} price={'+ R$ 0'} />
+            <ChoiceBtn selected={selectedOptions[2]} name={'Sem Hotel'} price={'+ R$ 0'} />
           </div>
           <div
+            style={{ background: selectedOptions[3], borderRadius: '24px' }}
             onClick={() => {
+              register(3);
               sethideTotal('');
             }}
           >
-            <ChoiceBtn name={'Com Hotel'} price={'+ R$ 100'} />
+            <ChoiceBtn selected={selectedOptions[3]} name={'Com Hotel'} price={'+ R$ 100'} />
           </div>
         </HorizontalContainer>
       </BottomRow>

@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { useState } from 'react';
 
 export default function ChoiceBtn(prop) {
-  const [color, setColor] = useState('');
   function changeColor() {
-    color === '#FFEED2' ? setColor('') : setColor('#FFEED2');
+    // prop.selected ? setColor('') : setColor('#FFEED2');
   }
+  const color = prop.selected;
 
   return (
     <>
@@ -21,7 +21,6 @@ export default function ChoiceBtn(prop) {
 
 const Container = styled.div`
   box-sizing: border-box;
-  background-color: ${(props) => props.backgroundColor};
   padding: 10px;
   width: 145px;
   height: 145px;
