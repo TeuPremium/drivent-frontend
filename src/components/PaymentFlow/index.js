@@ -14,7 +14,7 @@ export default function PaymentFlow() {
     <>
       <Typography variant="h4">Ingressos e pagamento</Typography>
       {enrollment ? (
-        <SelectTicketType />
+        <SelectTicketType ticketType={ticketTypes} />
       ) : (
         <NoContentCard text="Você precisa completar sua inscrição antes de prosseguir pra escolha de ingresso" />
       )}

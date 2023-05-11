@@ -5,8 +5,11 @@ import ChoiceBtn from './ChoiceBtn';
 import useToken from '../../../hooks/useToken';
 import ReactLoading from 'react-loading';
 
-export default function SelectTicketType() {
+export default function SelectTicketType(prop) {
   // eslint-disable-next-line no-unused-vars
+
+  console.log(prop);
+
   const [ticketTypes, setTicketTypes] = useState([]);
   const [hideRow, setHideRow] = useState('none');
   const [hideTotal, sethideTotal] = useState('none');
