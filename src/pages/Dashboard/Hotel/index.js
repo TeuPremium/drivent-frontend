@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import useTicket from '../../../hooks/api/useTicket';
 import { NoContentCard } from '../../../components/NoContentCard';
 import { RoomsContainer } from '../../../components/RoomsContainer/RoomsContainer';
+import HotelContainer from '../../../components/HotelButton/HotelContainer';
 
 export default function Hotel() {
   const { ticket } = useTicket();
@@ -19,7 +20,7 @@ export default function Hotel() {
         />
       ) : (
         <>
-          <HotelButton />
+          <HotelContainer />
           <RoomsContainer />
         </>
       )}
