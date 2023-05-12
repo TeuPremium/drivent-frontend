@@ -1,15 +1,52 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
-import axios from 'axios';
 
-export default function HotelButton({ hotel }) {
+export default function HotelButton({ hotel, selectedHotel, setSelectedHotel, setRooms }) {
+  let availableSpots = calculateAvaiableSpots(hotel.Rooms);
+  const accommodationString = buildAccommodationString(hotel.Rooms);
+  const selected = selectedHotel === hotel.id;
+
+  function handleClick() {
+    if (!selected) {
+      setRooms(hotel.Rooms);
+      setSelectedHotel(hotel.id);
+    } else {
+      setRooms([]);
+      setSelectedHotel(null);
+    }
+  }
+
+  return (
+    <>
+      <ButtonHotelContainer onClick={handleClick} selected={selected}>
+        <ImageHotelContainer>
+          <img src={hotel.image} alt={hotel.name} />
+        </ImageHotelContainer>
+        <SubtitlesContainer>
+          <h1>{hotel.name}</h1>
+          <h2>Tipos de acomodação</h2>
+          <h3>{accommodationString}</h3>
+          <h2>Vagas disponíveis</h2>
+          <h3>{availableSpots}</h3>
+        </SubtitlesContainer>
+      </ButtonHotelContainer>
+    </>
+  );
+}
+
+function calculateAvaiableSpots(rooms) {
+  let availableSpots = 0;
+  rooms.forEach((room) => {
+    availableSpots += room.capacity - room.Booking.length;
+  });
+  return availableSpots;
+}
+
+function buildAccommodationString(rooms) {
   let accommodation = [];
-  const { Rooms } = hotel;
   let accommodationString = '';
-  let available = 0;
 
   for (let i = 1; i < 4; i++) {
-    const found = Rooms.find((element) => element.capacity === i);
+    const found = rooms.find((element) => element.capacity === i);
     if (found) {
       accommodation.push(i);
     }
@@ -36,30 +73,13 @@ export default function HotelButton({ hotel }) {
     }
   }
 
-  Rooms.forEach((room) => (available = available + room.capacity - room.Booking.length));
-
-  return (
-    <>
-      <ButtonHotelContainer>
-        <ImageHotelContainer>
-          <img src={hotel.image} />
-        </ImageHotelContainer>
-        <SubtitlesContainer>
-          <h1>{hotel.name}</h1>
-          <h2>Tipos de acomodação</h2>
-          <h3>{accommodationString}</h3>
-          <h2>Vagas disponíveis</h2>
-          <h3>{available}</h3>
-        </SubtitlesContainer>
-      </ButtonHotelContainer>
-    </>
-  );
+  return accommodationString;
 }
 
 const ButtonHotelContainer = styled.div`
   height: 264px;
   width: 196px;
-  background-color: #ebebeb;
+  background-color: ${(props) => (props.selected ? '#FFEED2' : '#ebebeb')};
   border-radius: 5px;
   margin-right: 19px;
   margin-bottom: 19px;

@@ -1,10 +1,8 @@
 import styled from 'styled-components';
-import useRoom from '../../hooks/api/useRoom';
-import RoomButton from '../RoomButton/RoomButton';
 import { useState } from 'react';
+import RoomButton from '../RoomButton/RoomButton';
 
-export function RoomsContainer() {
-  const { rooms } = useRoom(1);
+export function RoomsContainer({ rooms }) {
   const [selectedRoom, setSelectedRoom] = useState(null);
   return (
     <>

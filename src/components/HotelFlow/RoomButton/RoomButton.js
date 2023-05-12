@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { BsPersonFill, BsPerson } from 'react-icons/bs';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { set } from 'date-fns';
 
 export default function RoomButton({ room, selectedRoom, setSelectedRoom }) {
   let out = room.Booking.length;
