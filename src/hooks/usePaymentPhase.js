@@ -1,29 +1,19 @@
-import { useMemo } from 'react';
 import SelectTicketType from '../components/payment/ticketTypes/selectTicketType';
-import useEnrollment from './api/useEnrollment';
-import useTicket from './api/useTicket';
-import useTicketTypes from './api/useTicketTypes';
+import PaymentConfirmation from '../components/PaymentFlow/PaymentConfirmation';
+import PaymentSuccess from '../components/PaymentFlow/PaymentSuccess';
 
-export default function usePaymentPhase() {
-  //   const { enrollment } = useEnrollment();
-  const { ticketTypes } = useTicketTypes();
-  //   const { ticket } = useTicket();
+export default function usePaymentPhase({ ticket, enrollment, ticketTypes }, setPaymentPhase) {
+  if (ticket)
+    return ticket.status === 'RESERVED' ? (
+      <PaymentConfirmation ticket={ticket} setPaymentPhase={setPaymentPhase} />
+    ) : (
+      <PaymentSuccess ticket={ticket} />
+    );
 
-  const enrollment = true;
-  const ticket = false;
-
-  const PaymentPhase = useMemo(() => {
-    if (ticket) return ticket.status === 'RESERVED' ? <></> : <></>;
-
-    if (!ticket && enrollment)
-      return (
-        <>
-          <SelectTicketType ticketType={ticketTypes} />
-        </>
-      );
-
-    return null;
-  }, [ticket, enrollment, ticketTypes]);
-
-  return { PaymentPhase };
+  if (!ticket && enrollment)
+    return (
+      <>
+        <SelectTicketType ticketType={ticketTypes} setPaymentPhase={setPaymentPhase} />
+      </>
+    );
 }
