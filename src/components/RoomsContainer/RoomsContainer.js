@@ -4,7 +4,7 @@ import RoomButton from '../RoomButton/RoomButton';
 import { useState } from 'react';
 
 export function RoomsContainer() {
-  const { rooms } = useRoom(13);
+  const { rooms } = useRoom(1);
   const [selectedRoom, setSelectedRoom] = useState(null);
   return (
     <>
