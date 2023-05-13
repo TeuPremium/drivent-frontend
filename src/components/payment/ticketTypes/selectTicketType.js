@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import instance from '../../../services/api';
 import ChoiceBtn from './ChoiceBtn';
 import useToken from '../../../hooks/useToken';
 import ReactLoading from 'react-loading';
+import { createTicket } from '../../../services/ticketApi';
+import PaymentConfirmation from '../../PaymentFlow/PaymentConfirmation';
+import { toast } from 'react-toastify';
 
-export default function SelectTicketType(prop) {
+export default function SelectTicketType({ ticketType, setPaymentPhase }) {
   // eslint-disable-next-line no-unused-vars
 
-  const ticketTypes = prop.ticketType;
+  const ticketTypes = ticketType;
 
   const [hideRow, setHideRow] = useState('none');
   const [hideTotal, sethideTotal] = useState('none');
@@ -47,12 +49,16 @@ export default function SelectTicketType(prop) {
   function setTicket(ticketType) {
     setTotal(ticketType.price);
     setSelectedTypeId(ticketType.id);
-    // console.log(selectedTypeId);
   }
 
-  function submitOption() {
-    //colocar aqui a funcao pra dar submit nas informacoes do ticket escolhido
-    //as informacoes estao salvas nos useState do TOTAL e do selectedTypeId
+  async function submitOption() {
+    try {
+      await createTicket({ ticketTypeId: selectedTypeId }, token);
+      setPaymentPhase(<PaymentConfirmation />);
+      toast('Ticket reservado com sucesso! :)');
+    } catch (err) {
+      toast('Não foi possível reservar o ticket!');
+    }
   }
 
   if (!ticketTypes) {
@@ -118,7 +124,7 @@ export default function SelectTicketType(prop) {
       <BottomRow display={hideTotal}>
         <TextRow>Fechado! O total ficou em R$ {total}. Agora é só confirmar:</TextRow>
 
-        <Button onClick={submitOption()}>RESERVAR INGRESSO</Button>
+        <Button onClick={() => submitOption()}>RESERVAR INGRESSO</Button>
       </BottomRow>
     </>
   );

@@ -7,9 +7,13 @@ export async function getTicketTypes(token) {
 }
 
 export async function getTicket(token) {
-  const response = await api.get('/tickets', authorization(token));
+  try {
+    const response = await api.get('/tickets', authorization(token));
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+
+  }
 }
 
 export async function createTicket(body, token) {
