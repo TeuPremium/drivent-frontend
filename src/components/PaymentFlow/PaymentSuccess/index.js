@@ -13,8 +13,8 @@ export default function PaymentSuccess({ ticket = useTicket().ticket }) {
       <TextRow>Ingresso escolhido</TextRow>
       <TicketData>
         <p>
-          {ticketType.isRemote ? 'Online' : 'Presencial + '}
-          {ticketType.includesHotel ? 'Com Hotel' : 'Sem Hotel'}
+          {ticketType.isRemote ? 'Online' : 'Presencial +'}
+          {!ticketType.isRemote && (ticketType.includesHotel ? ' Com Hotel' : ' Sem Hotel')}
         </p>
         <p>R$ {ticketType.price.toFixed(2).replace('.', ',')}</p>
       </TicketData>

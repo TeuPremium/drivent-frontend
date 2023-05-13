@@ -19,7 +19,7 @@ export default function ChoiceBtn(prop) {
     <>
       <Container>
         <TextContainer>
-          <h1>{name}</h1>
+          <h1>{`${name.charAt().toUpperCase()}${name.substr(1)}`}</h1>
           <h2>
             {prop.lowerOption ? '+ ' : ''}R${' '}
             {prop.lowPriceTicket ? prop.ticket.price - prop.lowPriceTicket : prop.ticket.price}
@@ -35,12 +35,9 @@ const Container = styled.div`
   padding: 10px;
   width: 145px;
   height: 145px;
-  left: 341px;
-  top: 323px;
   display: flex;
   justify-content: center;
   align-items: center;
-
   border: 1px solid #cecece;
   border-radius: 20px;
 `;
@@ -50,17 +47,10 @@ const TextContainer = styled.div`
   font-family: 'Roboto', sans-serif;
   text-align: center;
   h1 {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
     color: #454545;
+    margin-bottom: 5px;
   }
   h2 {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
     color: #898989;
   }
 `;

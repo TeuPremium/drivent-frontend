@@ -12,8 +12,8 @@ export default function SelectTicketType({ ticketType, setPaymentPhase }) {
 
   const ticketTypes = ticketType;
 
-  const [hideRow, setHideRow] = useState('none');
-  const [hideTotal, sethideTotal] = useState('none');
+  const [showRow, setShowRow] = useState(false);
+  const [showTotalRow, setShowTotalRow] = useState(false);
 
   //total e selectTypeid sao os dados referentes ao ticket selecionado para checkout
   const [total, setTotal] = useState(0);
@@ -22,10 +22,6 @@ export default function SelectTicketType({ ticketType, setPaymentPhase }) {
   const token = useToken();
   //selected options contem a cor dos botoes selecionados e o indice do item selecionado
   const [selectedOptions, setSelectedOptions] = useState(['', '', '', '', 0]);
-
-  function toggleRow() {
-    hideRow === 'none' ? setHideRow('') : setHideRow('none');
-  }
 
   function registerOption(index) {
     if (index === 0) {
@@ -54,7 +50,7 @@ export default function SelectTicketType({ ticketType, setPaymentPhase }) {
   async function submitOption() {
     try {
       await createTicket({ ticketTypeId: selectedTypeId }, token);
-      setPaymentPhase(<PaymentConfirmation />);
+      setPaymentPhase(<PaymentConfirmation setPaymentPhase={setPaymentPhase} />);
       toast('Ticket reservado com sucesso! :)');
     } catch (err) {
       toast('Não foi possível reservar o ticket!');
@@ -76,8 +72,8 @@ export default function SelectTicketType({ ticketType, setPaymentPhase }) {
           style={{ background: selectedOptions[0], borderRadius: '24px' }}
           onClick={() => {
             registerOption(0);
-            toggleRow();
-            sethideTotal('none');
+            setShowRow(!showRow);
+            setShowTotalRow(false);
           }}
         >
           <ChoiceBtn ticket={ticketTypes[1]} name={'presencial'} />
@@ -86,46 +82,48 @@ export default function SelectTicketType({ ticketType, setPaymentPhase }) {
           style={{ background: selectedOptions[1], borderRadius: '24px' }}
           onClick={() => {
             registerOption(1);
-            setHideRow('none');
-            sethideTotal('');
+            setShowRow(false);
+            setShowTotalRow(showRow ? true : !showTotalRow);
             setTicket(ticketTypes[0]);
           }}
         >
           <ChoiceBtn ticket={ticketTypes[0]} />
         </div>
       </HorizontalContainer>
+      {showRow && (
+        <>
+          <TextRow>Ótimo! Agora escolha sua modalidade de hospedagem</TextRow>
+          <HorizontalContainer>
+            <div
+              style={{ background: selectedOptions[2], borderRadius: '24px' }}
+              onClick={() => {
+                registerOption(2);
+                setShowTotalRow(!showTotalRow);
+                setTicket(ticketTypes[1]);
+              }}
+            >
+              <ChoiceBtn ticket={ticketTypes[1]} lowPriceTicket={ticketTypes[1].price} lowerOption={true} />
+            </div>
+            <div
+              style={{ background: selectedOptions[3], borderRadius: '24px' }}
+              onClick={() => {
+                registerOption(3);
+                setShowTotalRow(!showTotalRow);
+                setTicket(ticketTypes[2]);
+              }}
+            >
+              <ChoiceBtn ticket={ticketTypes[2]} lowPriceTicket={ticketTypes[1].price} lowerOption={true} />
+            </div>
+          </HorizontalContainer>
+        </>
+      )}
 
-      <BottomRow display={hideRow}>
-        <TextRow>Ótimo! Agora escolha sua modalidade de hospedagem</TextRow>
-        <HorizontalContainer>
-          <div
-            style={{ background: selectedOptions[2], borderRadius: '24px' }}
-            onClick={() => {
-              registerOption(2);
-              sethideTotal('');
-              setTicket(ticketTypes[1]);
-            }}
-          >
-            <ChoiceBtn ticket={ticketTypes[1]} lowPriceTicket={ticketTypes[1].price} lowerOption={true} />
-          </div>
-          <div
-            style={{ background: selectedOptions[3], borderRadius: '24px' }}
-            onClick={() => {
-              registerOption(3);
-              sethideTotal('');
-              setTicket(ticketTypes[2]);
-            }}
-          >
-            <ChoiceBtn ticket={ticketTypes[2]} lowPriceTicket={ticketTypes[1].price} lowerOption={true} />
-          </div>
-        </HorizontalContainer>
-      </BottomRow>
-
-      <BottomRow display={hideTotal}>
-        <TextRow>Fechado! O total ficou em R$ {total}. Agora é só confirmar:</TextRow>
-
-        <Button onClick={() => submitOption()}>RESERVAR INGRESSO</Button>
-      </BottomRow>
+      {showTotalRow && (
+        <>
+          <TextRow>Fechado! O total ficou em R$ {total}. Agora é só confirmar:</TextRow>
+          <Button onClick={() => submitOption()}>RESERVAR INGRESSO</Button>
+        </>
+      )}
     </>
   );
 }
@@ -144,6 +142,15 @@ const HorizontalContainer = styled.div`
   display: flex;
   width: 100%;
   margin-top: 17px;
+  & > div {
+    background-color: #fff;
+    cursor: pointer;
+    &:hover {
+      background-color: #ffeed2ba;
+      transform: scale(1.06);
+      box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+  }
   div:nth-of-type(2) {
     margin-left: 24px;
   }
@@ -152,15 +159,10 @@ const HorizontalContainer = styled.div`
 const Button = styled.button`
   width: 162px;
   height: 37px;
-  left: 335px;
-  top: 749px;
   background: #e0e0e0;
   border: none;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   margin-top: 25px;
-`;
-
-const BottomRow = styled.div`
-  display: ${(props) => props.display};
+  cursor: pointer;
 `;
