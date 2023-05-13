@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import ChoiceBtn from './ChoiceBtn';
 import useToken from '../../../hooks/useToken';
-import ReactLoading from 'react-loading';
 import { createTicket } from '../../../services/ticketApi';
-import PaymentConfirmation from '../../PaymentFlow/PaymentConfirmation';
+import PaymentConfirmation from '../PaymentConfirmation';
 import { toast } from 'react-toastify';
 
 export default function SelectTicketType({ ticketType, setPaymentPhase }) {
   // eslint-disable-next-line no-unused-vars
-
   const ticketTypes = ticketType;
 
   const [showRow, setShowRow] = useState(false);
@@ -57,13 +55,6 @@ export default function SelectTicketType({ ticketType, setPaymentPhase }) {
     }
   }
 
-  if (!ticketTypes) {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', margin: '20%' }}>
-        <ReactLoading type="bubbles" color="#000000" height={200} width={200} />
-      </div>
-    );
-  }
   return (
     <>
       <TextRow>Primeiro, escolha sua modalidade de ingresso</TextRow>
