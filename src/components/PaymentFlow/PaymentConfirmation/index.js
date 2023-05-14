@@ -13,7 +13,7 @@ export default function PaymentConfirmation({ ticket = useTicket().ticket, setPa
   const ticketType = useMemo(() => ticket ? ticket.TicketType : null, [ticket]);
 
   const token = useToken();
-  
+
   const { handleSubmit, handleChange, data } = useForm({
     onSubmit: async({ number, expiry, cvc, name }) => {
       const cardData = {
@@ -25,10 +25,12 @@ export default function PaymentConfirmation({ ticket = useTicket().ticket, setPa
       };
 
       try {
+        console.log( { ticketId: ticket.id, cardData }, token)
         await createPayment({ ticketId: ticket.id, cardData }, token);
         setPaymentPhase(<PaymentSuccess />);
         toast('Pagamento realizado com sucesso! :)');
       } catch (err) {
+        console.log(err)
         toast('Não foi possível realizar o pagamento!');
       }
     },
@@ -48,8 +50,8 @@ export default function PaymentConfirmation({ ticket = useTicket().ticket, setPa
       <TextRow>Ingresso escolhido</TextRow>
       <TicketData>
         <p>
-          {ticketType.isRemote ? 'Online' : 'Presencial + '}
-          {ticketType.includesHotel ? 'Com Hotel' : 'Sem Hotel'}
+          {ticketType.isRemote ? 'Online' : 'Presencial +'}
+          {!ticketType.isRemote && (ticketType.includesHotel ? ' Com Hotel' : ' Sem Hotel')}
         </p>
         <p>R$ {ticketType.price.toFixed(2).replace('.', ',')}</p>
       </TicketData>
