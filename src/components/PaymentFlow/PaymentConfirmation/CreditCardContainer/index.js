@@ -26,6 +26,9 @@ export default function CreditCardContainer({ handleChange, paymentData }) {
           onFocusCapture={(e) => setFocus(e.target.name)}
           onChange={handleChange('number')}
           value={paymentData?.number || ''}
+          required
+          minLength="19"
+          maxLength="19"
         />
         <p>Ex.: 49..., 51..., 36..., 37...</p>
         <Input
@@ -36,6 +39,8 @@ export default function CreditCardContainer({ handleChange, paymentData }) {
           onFocusCapture={(e) => setFocus(e.target.name)}
           onChange={handleChange('name')}
           value={paymentData?.name || ''}
+          required
+          minLength="3"
         />
         <InputGroup>
           <Input
@@ -47,6 +52,9 @@ export default function CreditCardContainer({ handleChange, paymentData }) {
             onFocusCapture={(e) => setFocus(e.target.name)}
             onChange={handleChange('expiry')}
             value={paymentData?.expiry || ''}
+            required
+            minLength="5"
+            maxLength="5"
           />
           <Input
             label="CVC"
@@ -56,6 +64,9 @@ export default function CreditCardContainer({ handleChange, paymentData }) {
             onFocusCapture={(e) => setFocus(e.target.name)}
             onChange={handleChange('cvc')}
             value={paymentData?.cvc || ''}
+            required
+            minLength="3"
+            maxLength="3"
           />
         </InputGroup>
       </div>

@@ -6,16 +6,16 @@ import { toast } from 'react-toastify';
 import useToken from '../../../hooks/useToken';
 import { createPayment } from '../../../services/paymentApi';
 import useTicket from '../../../hooks/api/useTicket';
-import PaymentSuccess from '../PaymentSuccess';
 import { useMemo } from 'react';
 
-export default function PaymentConfirmation({ ticket = useTicket().ticket, setPaymentPhase }) {
-  const ticketType = useMemo(() => ticket ? ticket.TicketType : null, [ticket]);
+export default function PaymentConfirmation({ ticket = useTicket().ticket, getTicket }) {
+  const ticketType = useMemo(() => (ticket ? ticket.TicketType : null), [ticket]);
 
   const token = useToken();
 
   const { handleSubmit, handleChange, data } = useForm({
-    onSubmit: async({ number, expiry, cvc, name }) => {
+    // eslint-disable-next-line
+    onSubmit: async ({ number, expiry, cvc, name }) => {
       const cardData = {
         issuer: handleCardIssuer(number),
         number,
@@ -25,12 +25,10 @@ export default function PaymentConfirmation({ ticket = useTicket().ticket, setPa
       };
 
       try {
-        console.log( { ticketId: ticket.id, cardData }, token)
         await createPayment({ ticketId: ticket.id, cardData }, token);
-        setPaymentPhase(<PaymentSuccess />);
+        await getTicket();
         toast('Pagamento realizado com sucesso! :)');
       } catch (err) {
-        console.log(err)
         toast('Não foi possível realizar o pagamento!');
       }
     },
@@ -43,12 +41,12 @@ export default function PaymentConfirmation({ ticket = useTicket().ticket, setPa
     },
   });
 
-  if(!ticketType) return <></>;
+  if (!ticketType) return <></>;
 
   return (
     <form onSubmit={handleSubmit}>
       <TextRow>Ingresso escolhido</TextRow>
-      <TicketData>
+      <TicketData type="button">
         <p>
           {ticketType.isRemote ? 'Online' : 'Presencial +'}
           {!ticketType.isRemote && (ticketType.includesHotel ? ' Com Hotel' : ' Sem Hotel')}
@@ -73,9 +71,9 @@ function handleCardIssuer(number) {
     return 'VISA';
   case firstNumber === '5':
     return 'MASTERCARD';
-  case firstNumber === '3' && (secondNumber === '6' ||  secondNumber === '8'):
+  case firstNumber === '3' && (secondNumber === '6' || secondNumber === '8'):
     return 'DINERS CLUB';
-  case firstNumber === '3' && (secondNumber === '7' ||  secondNumber === '4'):
+  case firstNumber === '3' && (secondNumber === '7' || secondNumber === '4'):
     return 'AMERICAN EXPRESS';
   case firstNumber === '3' && secondNumber === '5':
     return 'JBC';

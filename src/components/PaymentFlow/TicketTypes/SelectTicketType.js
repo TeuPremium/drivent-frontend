@@ -3,13 +3,9 @@ import styled from 'styled-components';
 import ChoiceBtn from './ChoiceBtn';
 import useToken from '../../../hooks/useToken';
 import { createTicket } from '../../../services/ticketApi';
-import PaymentConfirmation from '../PaymentConfirmation';
 import { toast } from 'react-toastify';
 
-export default function SelectTicketType({ ticketType, setPaymentPhase }) {
-  // eslint-disable-next-line no-unused-vars
-  const ticketTypes = ticketType;
-
+export default function SelectTicketType({ ticketTypes, getTicket }) {
   const [showRow, setShowRow] = useState(false);
   const [showTotalRow, setShowTotalRow] = useState(false);
 
@@ -45,15 +41,16 @@ export default function SelectTicketType({ ticketType, setPaymentPhase }) {
     setSelectedTypeId(ticketType.id);
   }
 
-  async function submitOption() {
+  // eslint-disable-next-line
+  const submitOption = async () => {
     try {
       await createTicket({ ticketTypeId: selectedTypeId }, token);
-      setPaymentPhase(<PaymentConfirmation setPaymentPhase={setPaymentPhase} />);
+      await getTicket();
       toast('Ticket reservado com sucesso! :)');
     } catch (err) {
       toast('Não foi possível reservar o ticket!');
     }
-  }
+  };
 
   return (
     <>
