@@ -8,6 +8,7 @@ export default function HotelContainer() {
   const { hotels } = useHotel();
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [rooms, setRooms] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState(null);
 
   return (
     <>
@@ -19,10 +20,11 @@ export default function HotelContainer() {
             selectedHotel={selectedHotel}
             setSelectedHotel={setSelectedHotel}
             setRooms={setRooms}
+            setSelectedRoom={setSelectedRoom}
           />
         ))}
       </HotelContainerBox>
-      {selectedHotel && <RoomsContainer rooms={rooms} />}
+      {selectedHotel && <RoomsContainer rooms={rooms} selectedRoom={selectedRoom} setSelectedRoom={setSelectedRoom} />}
     </>
   );
 }
