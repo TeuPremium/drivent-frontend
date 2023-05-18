@@ -6,6 +6,7 @@ import AuthLayout from '../../layouts/Auth';
 
 import Input from '../../components/Form/Input';
 import Button from '../../components/Form/Button';
+import { ImGithub } from 'react-icons/im';
 import Link from '../../components/Link';
 import { Row, Title, Label } from '../../components/Auth';
 
@@ -13,6 +14,7 @@ import EventInfoContext from '../../contexts/EventInfoContext';
 import UserContext from '../../contexts/UserContext';
 
 import useSignIn from '../../hooks/api/useSignIn';
+import styled from 'styled-components';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -24,7 +26,7 @@ export default function SignIn() {
   const { setUserData } = useContext(UserContext);
 
   const navigate = useNavigate();
-  
+
   async function submit(event) {
     event.preventDefault();
 
@@ -36,7 +38,7 @@ export default function SignIn() {
     } catch (err) {
       toast('Não foi possível fazer o login!');
     }
-  } 
+  }
 
   return (
     <AuthLayout background={eventInfo.backgroundImageUrl}>
@@ -47,9 +49,23 @@ export default function SignIn() {
       <Row>
         <Label>Entrar</Label>
         <form onSubmit={submit}>
-          <Input label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
-          <Input label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
-          <Button type="submit" color="primary" fullWidth disabled={loadingSignIn}>Entrar</Button>
+          <Input label="E-mail" type="text" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            label="Senha"
+            type="password"
+            fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button type="submit" color="primary" fullWidth disabled={loadingSignIn}>
+            Entrar
+          </Button>
+          <GitHubButton type="button" fullWidth disabled={loadingSignIn}>
+            Entrar
+            <span>
+              <ImGithub />
+            </span>
+          </GitHubButton>
         </form>
       </Row>
       <Row>
@@ -58,3 +74,28 @@ export default function SignIn() {
     </AuthLayout>
   );
 }
+
+const GitHubButton = styled.button`
+  width: 100%;
+  text-transform: uppercase;
+  background-color: #24292e;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  height: 36.5px;
+  margin-top: 8px;
+  padding: 16px 0px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 14px;
+  &:hover {
+    opacity: 0.98;
+  }
+  span{
+    font-size: 14px;
+    height: 14px;
+  }
+`;
