@@ -1,3 +1,4 @@
+import useToken from '../hooks/useToken';
 import api, { authorization } from './api';
 
 export async function createBooking(body, token) {
@@ -11,6 +12,8 @@ export async function changeBooking(bookingId, body, token) {
 }
 
 export async function getBooking(userId, token) {
+  console.log(token);
   const response = await api.get('/booking', parseInt(userId[0]), authorization(token));
+  console.log(response);
   return response.data;
 }

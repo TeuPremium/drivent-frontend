@@ -4,14 +4,28 @@ import useHotel from '../../../hooks/api/useHotel';
 import { RoomsContainer } from '../RoomsContainer/RoomsContainer';
 import { useState } from 'react';
 import useBooking from '../../../hooks/api/useBookings';
+import HotelCard from './HotelCard';
 
 export default function HotelContainer({ updateBooking }) {
   const { hotels } = useHotel();
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
-  const booking = useBooking();
-  console.log(booking);
+  const { Bookings } = useBooking();
+  console.log(Bookings);
+  console.log(hotels);
+
+  if (Bookings && hotels) {
+    const hotel = hotels[Bookings.id - 1];
+    return (
+      <>
+        <HotelContainerBox>
+          <HotelCard key={hotel.id} hotel={hotel} roomInfo={'você e mais 3'} />
+        </HotelContainerBox>
+      </>
+    );
+  }
+
   return (
     <>
       <HotelContainerBox>
