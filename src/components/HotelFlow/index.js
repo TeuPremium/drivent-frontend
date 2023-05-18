@@ -4,7 +4,7 @@ import { NoContentCard } from '../NoContentCard';
 import HotelContainer from './HotelButton/HotelContainer';
 import styled from 'styled-components';
 
-export default function HotelFlow() {
+export default function HotelFlow({ updateBooking }) {
   const { ticket } = useTicket();
   return (
     <>
@@ -17,7 +17,7 @@ export default function HotelFlow() {
         />
       ) : (
         <>
-          <HotelContainer />
+          <HotelContainer updateBooking={updateBooking} />
         </>
       )}
     </>

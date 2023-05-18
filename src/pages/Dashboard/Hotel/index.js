@@ -2,9 +2,15 @@ import styled from 'styled-components';
 import HotelFlow from '../../../components/HotelFlow';
 
 export default function Hotel() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const updateBookingParam = urlParams.get('updateBooking');
+  let updateBooking = 0;
+
+  if (updateBookingParam) updateBooking = parseInt(updateBookingParam);
+
   return (
     <Page>
-      <HotelFlow />
+      <HotelFlow updateBooking={updateBooking} />
     </Page>
   );
 }
