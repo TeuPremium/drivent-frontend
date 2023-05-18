@@ -2,15 +2,17 @@ import styled from 'styled-components';
 import RoomButton from '../RoomButton/RoomButton';
 import Button from '../../Form/Button';
 import { toast } from 'react-toastify';
-import { createBooking } from '../../../services/bookingApi';
+import { changeBooking, createBooking } from '../../../services/bookingApi';
 import useToken from '../../../hooks/useToken';
 
-export function RoomsContainer({ rooms, selectedRoom, setSelectedRoom }) {
+export function RoomsContainer({ rooms, selectedRoom, setSelectedRoom, updateBooking }) {
   const token = useToken();
 
   async function handleClick() {
     try {
-      await createBooking({ roomId: selectedRoom }, token);
+      if (updateBooking) await changeBooking(updateBooking, { roomId: selectedRoom }, token);
+      else await createBooking({ roomId: selectedRoom }, token);
+
       toast('Quarto reservado com sucesso! :)');
     } catch (error) {
       toast('Não foi possível reservar o quarto!');
@@ -25,7 +27,9 @@ export function RoomsContainer({ rooms, selectedRoom, setSelectedRoom }) {
           <RoomButton key={room.id} room={room} selectedRoom={selectedRoom} setSelectedRoom={setSelectedRoom} />
         ))}
       </RoomsDiv>
-      {selectedRoom && <SelectButton onClick={handleClick}>Reservar Quarto</SelectButton>}
+      {selectedRoom && (
+        <SelectButton onClick={handleClick}>{updateBooking ? 'Trocar reserva' : 'Reservar Quarto'}</SelectButton>
+      )}
     </>
   );
 }

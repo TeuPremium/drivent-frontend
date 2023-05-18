@@ -4,7 +4,7 @@ import useHotel from '../../../hooks/api/useHotel';
 import { RoomsContainer } from '../RoomsContainer/RoomsContainer';
 import { useState } from 'react';
 
-export default function HotelContainer() {
+export default function HotelContainer({ updateBooking }) {
   const { hotels } = useHotel();
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [rooms, setRooms] = useState([]);
@@ -24,7 +24,14 @@ export default function HotelContainer() {
           />
         ))}
       </HotelContainerBox>
-      {selectedHotel && <RoomsContainer rooms={rooms} selectedRoom={selectedRoom} setSelectedRoom={setSelectedRoom} />}
+      {selectedHotel && (
+        <RoomsContainer
+          rooms={rooms}
+          selectedRoom={selectedRoom}
+          setSelectedRoom={setSelectedRoom}
+          updateBooking={updateBooking}
+        />
+      )}
     </>
   );
 }
