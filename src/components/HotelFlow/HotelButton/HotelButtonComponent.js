@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default function HotelButton({ hotel, selectedHotel, setSelectedHotel, setRooms }) {
+export default function HotelButton({ hotel, selectedHotel, setSelectedHotel, setRooms, setSelectedRoom }) {
   let availableSpots = calculateAvaiableSpots(hotel.Rooms);
   const accommodationString = buildAccommodationString(hotel.Rooms);
   const selected = selectedHotel === hotel.id;
@@ -9,9 +9,11 @@ export default function HotelButton({ hotel, selectedHotel, setSelectedHotel, se
     if (!selected) {
       setRooms(hotel.Rooms);
       setSelectedHotel(hotel.id);
+      setSelectedRoom(null);
     } else {
       setRooms([]);
       setSelectedHotel(null);
+      setSelectedRoom(null);
     }
   }
 
@@ -83,6 +85,9 @@ const ButtonHotelContainer = styled.div`
   border-radius: 5px;
   margin-right: 19px;
   margin-bottom: 19px;
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const ImageHotelContainer = styled.div`
