@@ -7,7 +7,6 @@ import useToken from '../../../hooks/useToken';
 
 export function RoomsContainer({ rooms, selectedRoom, setSelectedRoom, updateBooking }) {
   const token = useToken();
-
   async function handleClick() {
     try {
       if (updateBooking) await changeBooking(updateBooking, { roomId: selectedRoom }, token);

@@ -7,6 +7,7 @@ import { Button } from '@material-ui/core';
 import useBooking from '../../../hooks/api/useBookings';
 import HotelCard from './HotelCard';
 import ReactLoading from 'react-loading';
+import { Link } from 'react-router-dom';
 
 export default function HotelContainer({ updateBooking }) {
   const { hotels } = useHotel();
@@ -15,6 +16,7 @@ export default function HotelContainer({ updateBooking }) {
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const { Bookings } = useBooking();
+  const [hotel, setHotel] = useState(false);
 
   if (chooseHotel) {
     if (Bookings && chooseHotel == true) {
@@ -48,16 +50,28 @@ export default function HotelContainer({ updateBooking }) {
   }
 
   if (Bookings && hotels) {
-    const hotel = hotels[Bookings.Room.hotelId - 1];
-
+    for (let i = 0; i < hotels.length; i++) {
+      if (hotel) break;
+      if (hotels[i].id == Bookings.Room.hotelId) {
+        setHotel(hotels[i]);
+        break;
+      }
+    }
     return (
       <>
         <HotelContainerBox>
           <HotelCard key={hotel.id} hotel={hotel} booking={Bookings} />
         </HotelContainerBox>
-        <SelectButton onClick={() => setChooseHotel('change')} style={{ background: ' #E0E0E0' }}>
-          Trocar Reserva
-        </SelectButton>
+        <Link to={'/dashboard/hotel?updateBooking=1'}>
+          <SelectButton
+            onClick={() => {
+              setChooseHotel('change');
+            }}
+            style={{ background: ' #E0E0E0' }}
+          >
+            Trocar Reserva
+          </SelectButton>
+        </Link>
       </>
     );
   } else {
