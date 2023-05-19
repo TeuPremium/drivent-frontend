@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ import UserContext from '../../contexts/UserContext';
 
 import useSignIn from '../../hooks/api/useSignIn';
 import styled from 'styled-components';
+import useGitHubAuth from '../../hooks/api/useGitHubAuth';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -26,6 +27,7 @@ export default function SignIn() {
   const { setUserData } = useContext(UserContext);
 
   const navigate = useNavigate();
+  const { gitHubAuthURL, code, signInGitHub } = useGitHubAuth();
 
   async function submit(event) {
     event.preventDefault();
@@ -38,6 +40,24 @@ export default function SignIn() {
     } catch (err) {
       toast('Não foi possível fazer o login!');
     }
+  }
+
+  async function handleLoginGithub() {
+    try {
+      const userData = await signInGitHub(code);
+
+      setUserData(userData);
+      toast('Login realizado com sucesso!');
+      navigate('/dashboard');
+    } catch (error) {
+      toast('Não foi possível fazer o login!');
+    }
+  }
+
+  useEffect(() => code && handleLoginGithub(), [code]);
+
+  async function redirectToGitHub() {
+    window.location.href = gitHubAuthURL;
   }
 
   return (
@@ -60,8 +80,8 @@ export default function SignIn() {
           <Button type="submit" color="primary" fullWidth disabled={loadingSignIn}>
             Entrar
           </Button>
-          <GitHubButton type="button" fullWidth disabled={loadingSignIn}>
-            Entrar
+          <GitHubButton type="button" onClick={() => redirectToGitHub()} fullWidth disabled={loadingSignIn}>
+            Entrar com
             <span>
               <ImGithub />
             </span>
@@ -94,7 +114,7 @@ const GitHubButton = styled.button`
   &:hover {
     opacity: 0.98;
   }
-  span{
+  span {
     font-size: 14px;
     height: 14px;
   }
