@@ -11,9 +11,7 @@ export async function changeBooking(bookingId, body, token) {
   return response.data;
 }
 
-export async function getBooking(userId, token) {
-  console.log(token);
-  const response = await api.get('/booking', parseInt(userId[0]), authorization(token));
-  console.log(response);
+export async function getBooking(token) {
+  const response = await api.get('/booking', authorization(token));
   return response.data;
 }

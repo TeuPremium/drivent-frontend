@@ -1,11 +1,25 @@
 import styled from 'styled-components';
+import { Typography } from '@material-ui/core';
 
-export default function HotelCard({ hotel }) {
-  let availableSpots = calculateAvaiableSpots(hotel.Rooms);
-  const accommodationString = buildAccommodationString(hotel.Rooms);
+export default function HotelCard({ hotel, booking }) {
+  const roomId = booking.Room.id;
+  let availableSpots = calculateGuests(hotel.Rooms, roomId);
+
+  const capacity = booking.Room.capacity;
+  const roomName = booking.Room.name;
+  let accommodation;
+
+  if (capacity === 1) accommodation = 'Single';
+  else if (capacity === 2) accommodation = 'Double';
+  else {
+    accommodation = 'Triple';
+  }
 
   return (
-    <>
+    <Container>
+      <div>
+        <StyledTypography>Você já selecionou seu quarto </StyledTypography>
+      </div>
       <ButtonHotelContainer>
         <ImageHotelContainer>
           <img src={hotel.image} alt={hotel.name} />
@@ -13,56 +27,34 @@ export default function HotelCard({ hotel }) {
         <SubtitlesContainer>
           <h1>{hotel.name}</h1>
           <h2>Quarto reservado</h2>
-          <h3>{accommodationString}</h3>
-          <h2>Vagas disponíveis</h2>
-          <h3>{availableSpots}</h3>
+          <h3>
+            Quarto {roomName}
+            {' ('}
+            {accommodation}
+            {')'}
+          </h3>
+          <h2>Pessoas no seu quarto</h2>
+          <h3>
+            {availableSpots == 0 ? (
+              <>somente você está no quarto </>
+            ) : (
+              <>
+                Você e mais {availableSpots} pessoa{'('}s{')'}
+              </>
+            )}
+          </h3>
         </SubtitlesContainer>
       </ButtonHotelContainer>
-    </>
+    </Container>
   );
 }
 
-function calculateAvaiableSpots(rooms) {
-  let availableSpots = 0;
-  rooms.forEach((room) => {
-    availableSpots += room.capacity - room.Booking.length;
-  });
-  return availableSpots;
-}
+function calculateGuests(Rooms, RoomId) {
+  const Room = Rooms.find((room) => room.id == RoomId);
 
-function buildAccommodationString(rooms) {
-  let accommodation = [];
-  let accommodationString = '';
-
-  for (let i = 1; i < 4; i++) {
-    const found = rooms.find((element) => element.capacity === i);
-    if (found) {
-      accommodation.push(i);
-    }
-  }
-
-  for (let z = 0; z <= accommodation.length; z++) {
-    if (accommodation.length > 1 && z === accommodation.length - 1) {
-      accommodationString += 'e ';
-    }
-    if (accommodation[z] === 1) {
-      if (accommodation.length === 3) {
-        accommodationString += 'Single, ';
-      } else {
-        accommodationString += 'Single ';
-      }
-    }
-
-    if (accommodation[z] === 2) {
-      accommodationString += 'Double ';
-    }
-
-    if (accommodation[z] === 3) {
-      accommodationString += 'Triple';
-    }
-  }
-
-  return accommodationString;
+  let otherGuests = Room.Booking.length - 1;
+  console.log(otherGuests);
+  return otherGuests;
 }
 
 const ButtonHotelContainer = styled.div`
@@ -72,9 +64,11 @@ const ButtonHotelContainer = styled.div`
   border-radius: 5px;
   margin-right: 19px;
   margin-bottom: 19px;
-  :hover {
-    cursor: pointer;
-  }
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const ImageHotelContainer = styled.div`
@@ -117,4 +111,10 @@ const SubtitlesContainer = styled.div`
     line-height: 14px;
     margin-top: 2px;
   }
+`;
+
+const StyledTypography = styled(Typography)`
+  color: #8e8e8e;
+  width: 100%;
+  margin-bottom: 14px;
 `;
