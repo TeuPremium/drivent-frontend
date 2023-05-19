@@ -86,7 +86,7 @@ export default function SelectTicketType({ ticketTypes, getTicket }) {
               style={{ background: selectedOptions[2], borderRadius: '24px' }}
               onClick={() => {
                 registerOption(2);
-                setShowTotalRow(!showTotalRow);
+                setShowTotalRow(showTotalRow && selectedOptions[2] ? !showTotalRow : true);
                 setTicket(ticketTypes[1]);
               }}
             >
@@ -96,7 +96,7 @@ export default function SelectTicketType({ ticketTypes, getTicket }) {
               style={{ background: selectedOptions[3], borderRadius: '24px' }}
               onClick={() => {
                 registerOption(3);
-                setShowTotalRow(!showTotalRow);
+                setShowTotalRow(showTotalRow && selectedOptions[3] ? !showTotalRow : true);
                 setTicket(ticketTypes[2]);
               }}
             >
