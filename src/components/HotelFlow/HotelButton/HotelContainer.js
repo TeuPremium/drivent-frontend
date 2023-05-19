@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Button } from '@material-ui/core';
 import useBooking from '../../../hooks/api/useBookings';
 import HotelCard from './HotelCard';
+import ReactLoading from 'react-loading';
 
 export default function HotelContainer({ updateBooking }) {
   const { hotels } = useHotel();
@@ -14,7 +15,37 @@ export default function HotelContainer({ updateBooking }) {
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const { Bookings } = useBooking();
-  //if (Bookings) setChooseHotel(false);
+
+  if (chooseHotel) {
+    if (Bookings && chooseHotel == true) {
+      setChooseHotel(false);
+      return <></>;
+    }
+    return (
+      <>
+        <HotelContainerBox>
+          {hotels?.map((hotel) => (
+            <HotelButton
+              key={hotel.id}
+              hotel={hotel}
+              selectedHotel={selectedHotel}
+              setSelectedHotel={setSelectedHotel}
+              setRooms={setRooms}
+              setSelectedRoom={setSelectedRoom}
+            />
+          ))}
+        </HotelContainerBox>
+        {selectedHotel && (
+          <RoomsContainer
+            rooms={rooms}
+            selectedRoom={selectedRoom}
+            setSelectedRoom={setSelectedRoom}
+            updateBooking={updateBooking}
+          />
+        )}
+      </>
+    );
+  }
 
   if (Bookings && hotels) {
     const hotel = hotels[Bookings.Room.hotelId - 1];
@@ -24,34 +55,21 @@ export default function HotelContainer({ updateBooking }) {
         <HotelContainerBox>
           <HotelCard key={hotel.id} hotel={hotel} booking={Bookings} />
         </HotelContainerBox>
-        <SelectButton style={{ background: ' #E0E0E0' }}>Trocar Reserva</SelectButton>
+        <SelectButton onClick={() => setChooseHotel('change')} style={{ background: ' #E0E0E0' }}>
+          Trocar Reserva
+        </SelectButton>
+      </>
+    );
+  } else {
+    return (
+      <>
+        {' '}
+        <LoadingContainer>
+          <ReactLoading type="bubbles" color="#000000" height={100} width={100} />
+        </LoadingContainer>
       </>
     );
   }
-  return (
-    <>
-      <HotelContainerBox>
-        {hotels?.map((hotel) => (
-          <HotelButton
-            key={hotel.id}
-            hotel={hotel}
-            selectedHotel={selectedHotel}
-            setSelectedHotel={setSelectedHotel}
-            setRooms={setRooms}
-            setSelectedRoom={setSelectedRoom}
-          />
-        ))}
-      </HotelContainerBox>
-      {selectedHotel && (
-        <RoomsContainer
-          rooms={rooms}
-          selectedRoom={selectedRoom}
-          setSelectedRoom={setSelectedRoom}
-          updateBooking={updateBooking}
-        />
-      )}
-    </>
-  );
 }
 
 const HotelContainerBox = styled.div`
@@ -63,4 +81,12 @@ const HotelContainerBox = styled.div`
 const SelectButton = styled(Button)`
   color: #e0e0e0;
   width: 182px;
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 `;

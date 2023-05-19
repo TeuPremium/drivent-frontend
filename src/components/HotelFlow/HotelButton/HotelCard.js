@@ -53,7 +53,6 @@ function calculateGuests(Rooms, RoomId) {
   const Room = Rooms.find((room) => room.id == RoomId);
 
   let otherGuests = Room.Booking.length - 1;
-  console.log(otherGuests);
   return otherGuests;
 }
 
