@@ -1,10 +1,6 @@
 import styled from 'styled-components';
-import HotelButton from './HotelButtonComponent';
 import useHotel from '../../../hooks/api/useHotel';
-import { RoomsContainer } from '../RoomsContainer/RoomsContainer';
 import { useState } from 'react';
-import { Button } from '@material-ui/core';
-import useBooking from '../../../hooks/api/useBookings';
 import HotelCard from './HotelCard';
 import ReactLoading from 'react-loading';
 import { Link } from 'react-router-dom';
