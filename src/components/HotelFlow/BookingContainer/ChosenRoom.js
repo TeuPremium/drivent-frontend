@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import useHotel from '../../../hooks/api/useHotel';
 import { useState } from 'react';
-import HotelCard from './HotelCard';
-import ReactLoading from 'react-loading';
 import { Link } from 'react-router-dom';
+import HotelCard from './HotelCard';
+import LoadingContainer from '../../LoadingContainer';
 
 export default function ChosenRoom({ Bookings }) {
   const [hotel, setHotel] = useState(false);
@@ -12,14 +12,12 @@ export default function ChosenRoom({ Bookings }) {
   if (Bookings && hotels) {
     for (let i = 0; i < hotels.length; i++) {
       if (hotel) break;
-      if (hotels[i].id == Bookings.Room.hotelId) {
+      if (hotels[i].id === Bookings.Room.hotelId) {
         setHotel(hotels[i]);
         break;
       }
     }
   }
-  console.log(hotel);
-  console.log(Bookings);
 
   if (hotel) {
     return (
@@ -34,9 +32,7 @@ export default function ChosenRoom({ Bookings }) {
     return (
       <>
         {' '}
-        <LoadingContainer>
-          <ReactLoading type="bubbles" color="#000000" height={100} width={100} />
-        </LoadingContainer>
+        <LoadingContainer />
       </>
     );
   }
@@ -46,12 +42,4 @@ const HotelContainerBox = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-`;
-
-const LoadingContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
 `;

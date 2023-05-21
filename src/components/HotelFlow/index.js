@@ -3,28 +3,18 @@ import useTicket from '../../hooks/api/useTicket';
 import { NoContentCard } from '../NoContentCard';
 import HotelContainer from './HotelButton/HotelContainer';
 import styled from 'styled-components';
-import ChosenRoom from './HotelButton/ChosenRoom';
 import useBooking from '../../hooks/api/useBookings';
-import { Button } from '@material-ui/core';
+import Booking from './BookingContainer';
 import { useState } from 'react';
+import LoadingContainer from '../LoadingContainer';
 
-export default function HotelFlow({ updateBooking }) {
-  const { ticket } = useTicket();
-  const { Bookings } = useBooking();
-  const [changeHotel, setChangeHotel] = useState(false);
+export default function HotelFlow() {
+  const { ticket, ticketLoading } = useTicket();
+  const { Bookings, BookingsLoading, getBookings } = useBooking();
+  const [updateBooking, setUpdateBooking] = useState(false);
 
-  //deixei aqui com um if porque colocar outro ternário no retorno debaixo
-  //deixaria difícil de entender o que está acontecendo.
-  if (Bookings && !changeHotel) {
-    return (
-      <>
-        <StyledTypography variant="h4">Escolha de quarto e hotel</StyledTypography>
-        <ChosenRoom Bookings={Bookings} />
-        <SelectButton style={{ background: ' #E0E0E0' }} onClick={() => setChangeHotel(true)}>
-          Trocar Reserva
-        </SelectButton>
-      </>
-    );
+  if (ticketLoading || BookingsLoading) {
+    return <LoadingContainer />;
   }
 
   return (
@@ -36,10 +26,15 @@ export default function HotelFlow({ updateBooking }) {
         <NoContentCard
           text={'Sua modalidade de ingresso não inclui hospedagem Prossiga para a escolha de atividades'}
         />
+      ) : Bookings && !updateBooking ? (
+        <Booking setUpdateBooking={setUpdateBooking} Bookings={Bookings} />
       ) : (
-        <>
-          <HotelContainer updateBooking={updateBooking} />
-        </>
+        <HotelContainer
+          bookingId={Bookings?.id}
+          getBookings={getBookings}
+          updateBooking={updateBooking}
+          setUpdateBooking={setUpdateBooking}
+        />
       )}
     </>
   );
@@ -47,9 +42,4 @@ export default function HotelFlow({ updateBooking }) {
 
 const StyledTypography = styled(Typography)`
   margin-bottom: 20px !important;
-`;
-
-const SelectButton = styled(Button)`
-  color: #e0e0e0;
-  width: 182px;
 `;

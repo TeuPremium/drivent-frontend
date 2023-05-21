@@ -5,8 +5,7 @@ import useTicket from '../../../hooks/api/useTicket';
 import SelectTicketType from '../TicketTypes/SelectTicketType';
 import PaymentConfirmation from '../PaymentConfirmation';
 import PaymentSuccess from '../PaymentSuccess';
-import ReactLoading from 'react-loading';
-import styled from 'styled-components';
+import LoadingContainer from '../../LoadingContainer';
 
 export default function CurrentPaymentPhase() {
   const { ticket, ticketLoading, getTicket } = useTicket();
@@ -14,9 +13,7 @@ export default function CurrentPaymentPhase() {
   const { ticketTypes, ticketTypesLoading } = useTicketTypes();
 
   return ticketLoading || enrollmentLoading || ticketTypesLoading ? (
-    <LoadingContainer>
-      <ReactLoading type="bubbles" color="#000000" height={100} width={100} />
-    </LoadingContainer>
+    <LoadingContainer />
   ) : (
     <>
       {!enrollment ? (
@@ -31,11 +28,3 @@ export default function CurrentPaymentPhase() {
     </>
   );
 }
-
-const LoadingContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-`;
