@@ -5,14 +5,23 @@ import { toast } from 'react-toastify';
 import { changeBooking, createBooking } from '../../../services/bookingApi';
 import useToken from '../../../hooks/useToken';
 
-export function RoomsContainer({ rooms, selectedRoom, setSelectedRoom, updateBooking }) {
+export function RoomsContainer({
+  rooms,
+  selectedRoom,
+  setSelectedRoom,
+  updateBooking,
+  getBookings,
+  bookingId,
+  setUpdateBooking,
+}) {
   const token = useToken();
   async function handleClick() {
     try {
-      if (updateBooking) await changeBooking(updateBooking, { roomId: selectedRoom }, token);
+      if (updateBooking) await changeBooking(bookingId, { roomId: selectedRoom }, token);
       else await createBooking({ roomId: selectedRoom }, token);
-
       toast('Quarto reservado com sucesso! :)');
+      await getBookings();
+      setUpdateBooking(false);
     } catch (error) {
       toast('Não foi possível reservar o quarto!');
     }

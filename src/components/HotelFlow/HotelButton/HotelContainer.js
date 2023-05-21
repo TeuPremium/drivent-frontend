@@ -4,7 +4,7 @@ import useHotel from '../../../hooks/api/useHotel';
 import { RoomsContainer } from '../RoomsContainer/RoomsContainer';
 import { useState } from 'react';
 
-export default function HotelContainer({ updateBooking }) {
+export default function HotelContainer({ updateBooking, getBookings, bookingId, setUpdateBooking }) {
   const { hotels } = useHotel();
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [rooms, setRooms] = useState([]);
@@ -30,6 +30,9 @@ export default function HotelContainer({ updateBooking }) {
           selectedRoom={selectedRoom}
           setSelectedRoom={setSelectedRoom}
           updateBooking={updateBooking}
+          getBookings={getBookings}
+          bookingId={bookingId}
+          setUpdateBooking={setUpdateBooking}
         />
       )}
     </>
