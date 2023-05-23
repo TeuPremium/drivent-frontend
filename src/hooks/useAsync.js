@@ -16,8 +16,10 @@ export default function useAsync(handler, immediate = true) {
       setLoading(false);
       return data;
     } catch (err) {
+      console.log('#########INSIDER####################', err);
       setError(err);
       setLoading(false);
+      return err;
     }
   };
 

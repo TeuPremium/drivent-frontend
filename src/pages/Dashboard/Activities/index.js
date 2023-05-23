@@ -1,3 +1,5 @@
+import ActivityFlow from '../../../components/ActivityFlow';
+
 export default function Activities() {
-  return 'Atividades: Em breve!';
+  return <ActivityFlow />;
 }

@@ -20,8 +20,9 @@ import useGitHubAuth from '../../hooks/api/useGitHubAuth';
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [SignInLoading, setSignInLoading] = useState(false);
 
-  const { loadingSignIn, signIn } = useSignIn();
+  const { signIn } = useSignIn();
 
   const { eventInfo } = useContext(EventInfoContext);
   const { setUserData } = useContext(UserContext);
@@ -30,28 +31,28 @@ export default function SignIn() {
   const { gitHubAuthURL, code, signInGitHub } = useGitHubAuth();
 
   async function submit(event) {
+    setSignInLoading(true);
     event.preventDefault();
 
-    try {
-      const userData = await signIn(email, password);
-      setUserData(userData);
-      toast('Login realizado com sucesso!');
-      navigate('/dashboard');
-    } catch (err) {
-      toast('Não foi possível fazer o login!');
-    }
+    const userData = await signIn(email, password);
+    setSignInLoading(false);
+    if (userData.name === 'Error') return toast('Não foi possível fazer o login!');
+
+    setUserData(userData);
+    toast('Login realizado com sucesso!');
+    navigate('/dashboard');
   }
 
   async function handleLoginGithub() {
-    try {
-      const userData = await signInGitHub(code);
+    setSignInLoading(true);
 
-      setUserData(userData);
-      toast('Login realizado com sucesso!');
-      navigate('/dashboard');
-    } catch (error) {
-      toast('Não foi possível fazer o login!');
-    }
+    const userData = await signInGitHub(code);
+    setSignInLoading(false);
+    if (userData.name === 'Error') return toast('Não foi possível fazer o login!');
+
+    setUserData(userData);
+    toast('Login realizado com sucesso!');
+    navigate('/dashboard');
   }
 
   useEffect(() => code && handleLoginGithub(), [code]);
@@ -69,18 +70,10 @@ export default function SignIn() {
       <Row>
         <Label>Entrar</Label>
         <form onSubmit={submit}>
-          <Input label="E-mail" type="text" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} />
-          <Input
-            label="Senha"
-            type="password"
-            fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button type="submit" color="primary" fullWidth disabled={loadingSignIn}>
-            Entrar
-          </Button>
-          <GitHubButton type="button" onClick={() => redirectToGitHub()} fullWidth disabled={loadingSignIn}>
+          <Input label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
+          <Input label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
+          <Button type="submit" color="primary" fullWidth disabled={SignInLoading}>Entrar</Button>
+          <GitHubButton type="button" onClick={() => redirectToGitHub()} fullWidth disabled={SignInLoading}>
             Entrar com
             <span>
               <ImGithub />

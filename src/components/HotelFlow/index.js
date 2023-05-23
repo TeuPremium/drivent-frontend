@@ -2,7 +2,6 @@ import { Typography } from '@material-ui/core';
 import useTicket from '../../hooks/api/useTicket';
 import { NoContentCard } from '../NoContentCard';
 import HotelContainer from './HotelButton/HotelContainer';
-import styled from 'styled-components';
 import useBooking from '../../hooks/api/useBookings';
 import Booking from './BookingContainer';
 import { useState } from 'react';
@@ -19,7 +18,7 @@ export default function HotelFlow() {
 
   return (
     <>
-      <StyledTypography variant="h4">Escolha de quarto e hotel</StyledTypography>
+      <Typography variant="h4">Escolha de quarto e hotel</Typography>
       {ticket?.status !== 'PAID' ? (
         <NoContentCard text={'Você precisa ter confirmado pagamento antes de fazer a escolha de hospedagem'} />
       ) : !ticket.TicketType?.includesHotel ? (
@@ -39,7 +38,3 @@ export default function HotelFlow() {
     </>
   );
 }
-
-const StyledTypography = styled(Typography)`
-  margin-bottom: 20px !important;
-`;

@@ -56,7 +56,8 @@ const TextRow = styled.div`
   font-weight: 400;
   font-size: 20px;
   line-height: 23px;
-  margin-bottom: 30px;
+  margin-bottom: 12px;
+  margin-top: 20px;
   color: #8e8e8e;
 `;
 
