@@ -73,17 +73,6 @@ export default function SignIn() {
           <Input label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
           <Input label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
           <Button type="submit" color="primary" fullWidth disabled={SignInLoading}>Entrar</Button>
-          <Input label="E-mail" type="text" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} />
-          <Input
-            label="Senha"
-            type="password"
-            fullWidth
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button type="submit" color="primary" fullWidth disabled={SignInLoading}>
-            Entrar
-          </Button>
           <GitHubButton type="button" onClick={() => redirectToGitHub()} fullWidth disabled={SignInLoading}>
             Entrar com
             <span>
