@@ -17,26 +17,27 @@ import useSignIn from '../../hooks/api/useSignIn';
 export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [SignInLoading, setSignInLoading] = useState(false);
 
-  const { loadingSignIn, signIn } = useSignIn();
+  const { signIn } = useSignIn();
 
   const { eventInfo } = useContext(EventInfoContext);
   const { setUserData } = useContext(UserContext);
 
   const navigate = useNavigate();
-  
+
   async function submit(event) {
+    setSignInLoading(true);
     event.preventDefault();
 
-    try {
-      const userData = await signIn(email, password);
-      setUserData(userData);
-      toast('Login realizado com sucesso!');
-      navigate('/dashboard');
-    } catch (err) {
-      toast('Não foi possível fazer o login!');
-    }
-  } 
+    const userData = await signIn(email, password);
+    setSignInLoading(false);
+    if (userData.name === 'Error') return toast('Não foi possível fazer o login!');
+
+    setUserData(userData);
+    toast('Login realizado com sucesso!');
+    navigate('/dashboard');
+  }
 
   return (
     <AuthLayout background={eventInfo.backgroundImageUrl}>
@@ -49,7 +50,7 @@ export default function SignIn() {
         <form onSubmit={submit}>
           <Input label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
           <Input label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
-          <Button type="submit" color="primary" fullWidth disabled={loadingSignIn}>Entrar</Button>
+          <Button type="submit" color="primary" fullWidth disabled={SignInLoading}>Entrar</Button>
         </form>
       </Row>
       <Row>
