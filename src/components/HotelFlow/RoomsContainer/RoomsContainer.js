@@ -1,9 +1,32 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import RoomButton from '../RoomButton/RoomButton';
+import Button from '../../Form/Button';
+import { toast } from 'react-toastify';
+import { changeBooking, createBooking } from '../../../services/bookingApi';
+import useToken from '../../../hooks/useToken';
 
-export function RoomsContainer({ rooms }) {
-  const [selectedRoom, setSelectedRoom] = useState(null);
+export function RoomsContainer({
+  rooms,
+  selectedRoom,
+  setSelectedRoom,
+  updateBooking,
+  getBookings,
+  bookingId,
+  setUpdateBooking,
+}) {
+  const token = useToken();
+  async function handleClick() {
+    try {
+      if (updateBooking) await changeBooking(bookingId, { roomId: selectedRoom }, token);
+      else await createBooking({ roomId: selectedRoom }, token);
+      toast('Quarto reservado com sucesso! :)');
+      await getBookings();
+      setUpdateBooking(false);
+    } catch (error) {
+      toast('Não foi possível reservar o quarto!');
+    }
+  }
+
   return (
     <>
       <TextRow>Ótima pedida! Agora escolha seu quarto:</TextRow>
@@ -12,6 +35,9 @@ export function RoomsContainer({ rooms }) {
           <RoomButton key={room.id} room={room} selectedRoom={selectedRoom} setSelectedRoom={setSelectedRoom} />
         ))}
       </RoomsDiv>
+      {selectedRoom && (
+        <SelectButton onClick={handleClick}>{updateBooking ? 'Trocar reserva' : 'Reservar Quarto'}</SelectButton>
+      )}
     </>
   );
 }
@@ -33,4 +59,8 @@ const TextRow = styled.div`
   margin-bottom: 12px;
   margin-top: 20px;
   color: #8e8e8e;
+`;
+
+const SelectButton = styled(Button)`
+  width: 182px;
 `;

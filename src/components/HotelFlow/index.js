@@ -2,9 +2,19 @@ import { Typography } from '@material-ui/core';
 import useTicket from '../../hooks/api/useTicket';
 import { NoContentCard } from '../NoContentCard';
 import HotelContainer from './HotelButton/HotelContainer';
+import useBooking from '../../hooks/api/useBookings';
+import Booking from './BookingContainer';
+import { useState } from 'react';
+import LoadingContainer from '../LoadingContainer';
 
 export default function HotelFlow() {
-  const { ticket } = useTicket();
+  const { ticket, ticketLoading } = useTicket();
+  const { Bookings, BookingsLoading, getBookings } = useBooking();
+  const [updateBooking, setUpdateBooking] = useState(false);
+
+  if (ticketLoading || BookingsLoading) {
+    return <LoadingContainer />;
+  }
 
   return (
     <>
@@ -15,10 +25,15 @@ export default function HotelFlow() {
         <NoContentCard
           text={'Sua modalidade de ingresso não inclui hospedagem Prossiga para a escolha de atividades'}
         />
+      ) : Bookings && !updateBooking ? (
+        <Booking setUpdateBooking={setUpdateBooking} Bookings={Bookings} />
       ) : (
-        <>
-          <HotelContainer />
-        </>
+        <HotelContainer
+          bookingId={Bookings?.id}
+          getBookings={getBookings}
+          updateBooking={updateBooking}
+          setUpdateBooking={setUpdateBooking}
+        />
       )}
     </>
   );

@@ -43,6 +43,7 @@ const TicketData = styled.button`
   flex-direction: column;
   gap: 10px;
   justify-content: center;
+  align-items: center;
   & p:nth-child(2) {
     color: #898989;
   }
