@@ -1,4 +1,3 @@
-import useToken from '../hooks/useToken';
 import api, { authorization } from './api';
 
 export async function createBooking(body, token) {

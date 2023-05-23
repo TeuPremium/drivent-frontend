@@ -35,7 +35,7 @@ export default function HotelCard({ hotel, booking }) {
           </h3>
           <h2>Pessoas no seu quarto</h2>
           <h3>
-            {availableSpots == 0 ? (
+            {availableSpots === 0 ? (
               <>somente você está no quarto </>
             ) : (
               <>
@@ -50,7 +50,7 @@ export default function HotelCard({ hotel, booking }) {
 }
 
 function calculateGuests(Rooms, RoomId) {
-  const Room = Rooms.find((room) => room.id == RoomId);
+  const Room = Rooms.find((room) => room.id === RoomId);
 
   let otherGuests = Room.Booking.length - 1;
   return otherGuests;
