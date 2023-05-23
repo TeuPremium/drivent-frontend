@@ -1,6 +1,7 @@
 import { Typography } from '@material-ui/core';
 import useTicket from '../../hooks/api/useTicket';
 import { NoContentCard } from '../NoContentCard';
+import DaysContainer from './DaysContainer';
 
 export default function ActivityFlow() {
   const { ticket } = useTicket();
@@ -16,7 +17,7 @@ export default function ActivityFlow() {
         />
       ) : (
         <>
-          To do
+          <DaysContainer />
         </>
       )}
     </>

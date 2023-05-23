@@ -16,6 +16,7 @@ export default function useAsync(handler, immediate = true) {
       setLoading(false);
       return data;
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.log('#########INSIDER####################', err);
       setError(err);
       setLoading(false);
