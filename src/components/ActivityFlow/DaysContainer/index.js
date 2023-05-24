@@ -7,8 +7,13 @@ export default function DaysContainer({ selectedDay, setSelectedDay }) {
   const { eventInfo: event } = useContext(EventInfoContext);
   const daysArray = createDaysArray(event.startsAt, event.endsAt);
 
+  const handleWheelScroll = (event) => {
+    const container = event.currentTarget;
+    const scrollAmount = event.deltaY > 0 ? 100 : -100;
+    container.scrollLeft += scrollAmount;
+  };
   return (
-    <Container>
+    <Container onWheel={handleWheelScroll}>
       {daysArray.map((day) => (
         <DayButton key={day.day} data={day} selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
       ))}
@@ -46,5 +51,25 @@ function createDaysArray(startsAt, endsAt) {
 const Container = styled.div`
   margin-top: 27px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #e8e8e8 transparent;
+
+  &::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #e8e8e8;
+    border-radius: 15px;
+    border: 6px solid transparent;
+    background-clip: padding-box;
+    transition: height 0.2s ease-in-out;
+    padding: 5px;
+  }
 `;
