@@ -1,12 +1,11 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import EventInfoContext from '../../../contexts/EventInfoContext';
 import DayButton from './DayButton';
 import styled from 'styled-components';
 
-export default function DaysContainer() {
+export default function DaysContainer({ selectedDay, setSelectedDay }) {
   const { eventInfo: event } = useContext(EventInfoContext);
   const daysArray = createDaysArray(event.startsAt, event.endsAt);
-  const [selectedDay, setSelectedDay] = useState(null);
 
   return (
     <Container>

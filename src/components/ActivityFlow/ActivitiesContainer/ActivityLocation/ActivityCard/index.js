@@ -1,20 +1,25 @@
 import styled from 'styled-components';
 import { AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 import { RiLoginBoxLine } from 'react-icons/ri';
+import { getActivityDuration, getFormatedTime } from '../../../../../utils/dateUtils';
 
-export default function ActivityCard({ noVacancy = false }) {
+export default function ActivityCard({ activity, noVacancy = false }) {
+  const { id, startsAt, endsAt, name, openSeats } = activity;
+
   return (
-    <Card>
+    <Card activityDuration={getActivityDuration(startsAt, endsAt)} disabled={noVacancy}>
       <CardData>
-        <p>Minecraft: montando o PC ideal</p>
-        <p>09:00 - 10:00</p>
+        <p>{name}</p>
+        <p>
+          {getFormatedTime(startsAt)} - {getFormatedTime(endsAt)}
+        </p>
       </CardData>
-      <ConfirmActivityButton noVacancy={noVacancy}>
+      <ConfirmActivityButton onClick={() => alert('clcique')} noVacancy={noVacancy} disabled={noVacancy}>
         <div>
           {/* Variar com o estado da atividade*/}
           {noVacancy ? <AiOutlineCloseCircle /> : <RiLoginBoxLine />}
         </div>
-        {noVacancy ? 'Esgotado' : '27 vagas'}
+        {noVacancy ? 'Esgotado' : `${openSeats} vagas`}
       </ConfirmActivityButton>
     </Card>
   );
@@ -30,9 +35,11 @@ const Card = styled.li`
   display: flex;
   transition: all 150ms;
   margin-bottom: 6px;
-  &:has(button:hover) {
+  ${({ disabled }) =>
+    !disabled &&
+    `&:has(button:hover) {
     background-color: #e7e7e7;
-  }
+  }`}
 `;
 
 const CardData = styled.div`
@@ -50,7 +57,7 @@ const CardData = styled.div`
 `;
 
 const ConfirmActivityButton = styled.button`
-  cursor: pointer;
+  cursor: ${({ disabled }) => !disabled && 'pointer'};
   width: clamp(40px, 33%, 66px);
   border: none;
   background-color: transparent;
