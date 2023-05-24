@@ -12,6 +12,7 @@ export default function HotelContainer({ updateBooking, getBookings, bookingId, 
 
   return (
     <>
+      <TextRow>Primeiro, escolha seu hotel:</TextRow>
       <HotelContainerBox>
         {hotels?.map((hotel) => (
           <HotelButton
@@ -43,4 +44,15 @@ const HotelContainerBox = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+`;
+
+const TextRow = styled.div`
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 23px;
+  margin-top: 20px;
+  margin-bottom: 12px;
+  color: #8e8e8e;
 `;

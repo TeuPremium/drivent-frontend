@@ -17,26 +17,27 @@ export default function Enroll() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [signUpLoading, setSignUpLoading] = useState(false);
 
-  const { loadingSignUp, signUp } = useSignUp();
+  const { signUp } = useSignUp();
 
   const navigate = useNavigate();
-  
+
   const { eventInfo } = useContext(EventInfoContext);
 
   async function submit(event) {
+    setSignUpLoading(true);
     event.preventDefault();
 
     if (password !== confirmPassword) {
       toast('As senhas devem ser iguais!');
     } else {
-      try {
-        await signUp(email, password);
-        toast('Inscrito com sucesso! Por favor, faça login.');
-        navigate('/sign-in');
-      } catch (error) {
-        toast('Não foi possível fazer o cadastro!');
-      }
+      const response = await signUp(email, password);
+      setSignUpLoading(false);
+      if (response.name === 'Error') return toast('Não foi possível fazer o cadastro!');
+
+      toast('Inscrito com sucesso! Por favor, faça login.');
+      navigate('/sign-in');
     }
   }
 
@@ -52,7 +53,7 @@ export default function Enroll() {
           <Input label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
           <Input label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
           <Input label="Repita sua senha" type="password" fullWidth value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
-          <Button type="submit" color="primary" fullWidth disabled={loadingSignUp}>Inscrever</Button>
+          <Button type="submit" color="primary" fullWidth disabled={signUpLoading}>Inscrever</Button>
         </form>
       </Row>
       <Row>

@@ -29,6 +29,7 @@ const Card = styled.li`
   padding: 10px 0 10px 10px;
   display: flex;
   transition: all 150ms;
+  margin-bottom: 6px;
   &:has(button:hover) {
     background-color: #e7e7e7;
   }

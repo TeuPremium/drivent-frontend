@@ -1,11 +1,5 @@
-import { Typography } from '@material-ui/core';
-import ActivitiesContainer from '../../../components/ActivitiesContainer';
+import ActivityFlow from '../../../components/ActivityFlow';
 
 export default function Activities() {
-  return (
-    <>
-      <Typography variant="h4">Escolha de atividades</Typography>
-      <ActivitiesContainer/>
-    </>
-  );
+  return <ActivityFlow />;
 }
