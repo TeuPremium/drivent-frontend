@@ -29,6 +29,7 @@ const DayButtonStyled = styled.div`
   border-radius: 4px;
   margin-right: 17px;
   margin-bottom: 17px;
+  flex-shrink: 0;
   :hover {
     cursor: pointer;
   }
