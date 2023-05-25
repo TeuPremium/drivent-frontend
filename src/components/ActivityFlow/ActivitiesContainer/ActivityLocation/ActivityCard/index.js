@@ -74,7 +74,6 @@ const Card = styled.li`
   margin-bottom: 6px;
   &:hover {
     background-color: ${({ disabled, subscribedActivity }) => !disabled && subscribedActivity ? '#fadce5' : '#e7e7e7'};
-    cursor: ${({ disabled }) => !disabled && 'pointer'};
   }
 `;
 
