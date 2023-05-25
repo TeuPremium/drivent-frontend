@@ -14,7 +14,7 @@ export default function ActivitiesContainer() {
 
   const [selectedDay, setSelectedDay] = useState(null);
   const [activities, setActivities] = useState(null);
-  
+
   useEffect(async() => {
     if (selectedDay) {
       const [day, layoutMonth] = selectedDay.split('/');
@@ -41,7 +41,13 @@ export default function ActivitiesContainer() {
       {selectedDay && activities ? (
         <Container>
           {activityLocations.map(({ id, name }) => (
-            <ActivityLocation key={id} locationTitle={name} activities={activities[id]} />
+            <ActivityLocation
+              key={id}
+              locationTitle={name}
+              activities={activities[id]}
+              selectedDay={selectedDay}
+              setActivities={setActivities}
+            />
           ))}
         </Container>
       ) : (
