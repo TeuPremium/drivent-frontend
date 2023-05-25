@@ -1,3 +1,5 @@
+import CertificatesFlow from '../../../components/CertificatesFlow';
+
 export default function Certificate() {
-  return 'Certificado: Em breve!';
+  return <CertificatesFlow />;
 }
