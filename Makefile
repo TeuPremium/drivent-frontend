@@ -1,5 +1,5 @@
 .PHONY: boot-startup
 
 boot-startup:
-	npm install
+	npm install --legacy-peer-deps
 	npm run docker:start

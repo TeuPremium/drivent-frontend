@@ -3,22 +3,11 @@ import { BsPersonFill, BsPerson } from 'react-icons/bs';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-// object for testing
-const fakeRoom = {
-  id: 1,
-  name: 101,
-  capacity: 4,
-  hotelId: 1,
-  createdAt: '2021-01-01T00:00:00.000Z',
-  updatedAt: '2021-01-01T00:00:00.000Z',
-  Booking: [{ id: 1 }, { id: 2 }],
-};
-
-export default function RoomButton() {
-  const out = fakeRoom.Booking.length;
-  const availables = fakeRoom.capacity - out;
+export default function RoomButton({ room, selectedRoom, setSelectedRoom }) {
+  let out = room.Booking.length;
+  let availables = room.capacity - out;
   const [PersonIcons, setPersonIcons] = useState([]);
-  const [selected, setSelected] = useState(false);
+  const selected = selectedRoom === room.id;
   const vacancy = availables >= 1;
   let iconsArray = [];
 
@@ -26,28 +15,29 @@ export default function RoomButton() {
 
   useEffect(() => {
     for (let i = 0; i < availables; i++) {
-      iconsArray.push(<UnfilledIcon key={iconsArray.length} />);
+      if (i === availables - 1 && selected) {
+        iconsArray.push(<SelectedIcon key={iconsArray.length} />);
+      } else {
+        iconsArray.push(<UnfilledIcon key={iconsArray.length} />);
+      }
     }
     for (let i = 0; i < out; i++) {
       iconsArray.push(<FilledIcon key={iconsArray.length} />);
     }
     setPersonIcons(iconsArray);
-  }, [availables, out]);
+  }, [availables, out, selectedRoom]);
 
   function handleClick() {
-    let newArray = PersonIcons;
     if (!selected) {
-      newArray[availables - 1] = <SelectedIcon key={availables - 1} />;
+      setSelectedRoom(room.id);
     } else {
-      newArray[availables - 1] = <UnfilledIcon key={availables - 1} />;
+      setSelectedRoom(null);
     }
-    setSelected(!selected);
-    setPersonIcons(newArray);
   }
 
   return (
     <ButtonStyled onClick={handleClick} disabled={!vacancy} selected={selected}>
-      <RoomName vacancy={vacancy}>{fakeRoom.name}</RoomName>
+      <RoomName vacancy={vacancy}>{room.name}</RoomName>
       <div>{PersonIcons}</div>
     </ButtonStyled>
   );
@@ -64,6 +54,8 @@ const ButtonStyled = styled.button`
   background-color: ${(props) => (props.disabled ? '#E9E9E9' : props.selected ? '#FFEED2' : '#ffffff')};
   border-radius: 10px;
   padding: 11px 14px 11px 14px;
+  margin-right: 17px;
+  margin-bottom: 8px;
 `;
 
 const RoomName = styled.p`

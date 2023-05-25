@@ -1,16 +1,23 @@
-import HotelButton from '../../../components/HotelButton/HotelButtonComponent';
-import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
+import HotelFlow from '../../../components/HotelFlow';
 
 export default function Hotel() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const updateBookingParam = urlParams.get('updateBooking');
+  let updateBooking = 0;
+
+  if (updateBookingParam) updateBooking = parseInt(updateBookingParam);
+
   return (
-    <>
-      <StyledTypography variant="h4">Escolha de quarto e hotel</StyledTypography>
-      <HotelButton />
-    </>
+    <Page>
+      <HotelFlow updateBooking={updateBooking} />
+    </Page>
   );
 }
 
-const StyledTypography = styled(Typography)`
-  margin-bottom: 20px !important;
+const Page = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin-bottom: 30px;
 `;

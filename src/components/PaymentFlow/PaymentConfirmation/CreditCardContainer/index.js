@@ -1,33 +1,20 @@
-import { useState } from 'react';
 import Cards from 'react-credit-cards';
+import Input from '../../../Form/Input';
 import 'react-credit-cards/es/styles-compiled.css';
 import styled from 'styled-components';
-import Input from '../Form/Input';
+import { useState } from 'react';
 
-export default function PaymentContainer() {
-  const [paymentData, setPaymentData] = useState({
-    cvc: '',
-    expiry: '',
-    name: '',
-    number: '',
-  });
-
+export default function CreditCardContainer({ handleChange, paymentData }) {
   const [focus, setFocus] = useState('');
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    setPaymentData({ ...paymentData, [name]: value });
-  };
-
   return (
-    <PaymentContainerStyled id="PaymentData">
+    <Container id="PaymentData">
       <Cards
-        cvc={paymentData.cvc}
-        expiry={paymentData.expiry}
+        cvc={paymentData?.cvc || ''}
+        expiry={paymentData?.expiry || ''}
         focused={focus}
-        name={paymentData.name}
-        number={paymentData.number}
+        name={paymentData?.name || ''}
+        number={paymentData?.number || ''}
       />
       <div>
         <Input
@@ -37,8 +24,11 @@ export default function PaymentContainer() {
           type="tel"
           name="number"
           onFocusCapture={(e) => setFocus(e.target.name)}
-          onChange={(e) => handleInputChange(e)}
-          value={paymentData.number}
+          onChange={handleChange('number')}
+          value={paymentData?.number || ''}
+          required
+          minLength="19"
+          maxLength="19"
         />
         <p>Ex.: 49..., 51..., 36..., 37...</p>
         <Input
@@ -47,8 +37,10 @@ export default function PaymentContainer() {
           type="text"
           name="name"
           onFocusCapture={(e) => setFocus(e.target.name)}
-          onChange={(e) => handleInputChange(e)}
-          value={paymentData.name}
+          onChange={handleChange('name')}
+          value={paymentData?.name || ''}
+          required
+          minLength="3"
         />
         <InputGroup>
           <Input
@@ -58,8 +50,11 @@ export default function PaymentContainer() {
             name="expiry"
             mask={'99/99'}
             onFocusCapture={(e) => setFocus(e.target.name)}
-            onChange={(e) => handleInputChange(e)}
-            value={paymentData.expiry}
+            onChange={handleChange('expiry')}
+            value={paymentData?.expiry || ''}
+            required
+            minLength="5"
+            maxLength="5"
           />
           <Input
             label="CVC"
@@ -67,18 +62,22 @@ export default function PaymentContainer() {
             name="cvc"
             mask={'999'}
             onFocusCapture={(e) => setFocus(e.target.name)}
-            onChange={(e) => handleInputChange(e)}
-            value={paymentData.cvc}
+            onChange={handleChange('cvc')}
+            value={paymentData?.cvc || ''}
+            required
+            minLength="3"
+            maxLength="3"
           />
         </InputGroup>
       </div>
-    </PaymentContainerStyled>
+    </Container>
   );
 }
 
-const PaymentContainerStyled = styled.div`
+const Container = styled.div`
   display: flex;
   max-width: 676px;
+  margin-bottom: 36px;
   height: 225px;
   justify-content: space-between;
   align-items: center;
@@ -87,6 +86,12 @@ const PaymentContainerStyled = styled.div`
   & p {
     color: #8e8e8e;
     font-size: 14px;
+  }
+
+  & > div:nth-child(2) {
+    label {
+      font-size: clamp(0.3rem, 2vw, 1rem) !important;
+    }
   }
 `;
 
