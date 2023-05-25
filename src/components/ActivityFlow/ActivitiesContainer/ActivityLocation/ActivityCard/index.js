@@ -72,11 +72,10 @@ const Card = styled.li`
   display: flex;
   transition: all 150ms;
   margin-bottom: 6px;
-  ${({ disabled }) =>
-    !disabled &&
-    `&:has(button:hover) {
-    background-color: #e7e7e7;
-  }`}
+  &:hover {
+    background-color: ${({ disabled, subscribedActivity }) => !disabled && subscribedActivity ? '#fadce5' : '#e7e7e7'};
+    cursor: ${({ disabled }) => !disabled && 'pointer'};
+  }
 `;
 
 const CardData = styled.div`
