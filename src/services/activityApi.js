@@ -19,7 +19,7 @@ export async function subscribeActivity(activityId, token) {
 }
 
 export async function unsubscribeActivity(activityId, token) {
-  const response = await api.delete(`/activities/userActivity/${activityId}`, authorization(token));
+  const response = await api.delete(`/activities/ticketActivity/${activityId}`, authorization(token));
 
   return response.data;
 }
