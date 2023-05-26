@@ -5,6 +5,7 @@ import print from '../../../assets/images/print-svgrepo-com.svg';
 import ReactToPrint from 'react-to-print';
 import { useRef } from 'react';
 import certificate from '../../../assets/images/certificateTemplate.jpg';
+import { toast } from 'react-toastify';
 
 export default function PrintCertificateContainer(props) {
   const componentRef = useRef();
@@ -22,7 +23,9 @@ export default function PrintCertificateContainer(props) {
             }}
             content={() => componentRef.current}
             documentTitle="My Certificate"
-            pageStyle="print"
+            onAfterPrint={() => {
+              props.ShowCertificate(false);
+            }}
           />
 
           <div>
