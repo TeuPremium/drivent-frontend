@@ -13,8 +13,8 @@ export default function ActivityCard({ activity, noVacancy = false, selectedDay,
   const token = useToken();
   const { getActivities } = useActivity();
   const { eventInfo: event } = useContext(EventInfoContext);
-  const { id, startsAt, endsAt, name, openSeats, UserActivities } = activity;
-  const subscribedActivity = UserActivities.length > 0;
+  const { id, startsAt, endsAt, name, openSeats, Tickets } = activity;
+  const subscribedActivity = Tickets.length > 0;
 
   async function handleCLick() {
     const [day, layoutMonth] = selectedDay.split('/');
@@ -36,7 +36,7 @@ export default function ActivityCard({ activity, noVacancy = false, selectedDay,
       const activitiesData = await getActivities(queryString);
       setActivities(activitiesData);
     } catch (error) {
-      toast('Erro ao modificar atividade');
+      toast('Erro! verifique choque de horários ou tente novamente mais tarde');
     }
   }
 
