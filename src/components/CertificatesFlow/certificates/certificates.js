@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import CertificateCard from './certificateCard';
 import { Typography } from '@material-ui/core';
+import PrintableCertificate from './PrintCertificate';
 
 export default function Certificates() {
   const name = 'Worksohop de assembly';
+
   return (
     <>
       <div>
@@ -33,7 +35,7 @@ const CertificatesContainer = styled.div`
   height: 264px;
   box-sizing: content-box;
   overflow-x: scroll;
-  margin-top: 14px;
+  margin-top: 30px;
 
   ::-webkit-scrollbar {
     width: 20px;
