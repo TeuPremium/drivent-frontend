@@ -27,17 +27,21 @@ export default function Certificates() {
         <div onClick={() => setShowCertificate(true)}>
           <CertificateCard name={name} />
         </div>
-        <CertificateCard name={name} />
-        <CertificateCard name={name} />
-        <CertificateCard name={name} />
-        <CertificateCard name={name} />
-        <CertificateCard name={name} />
-        <CertificateCard name={name} />
-        <CertificateCard name={name} />
-        <CertificateCard name={name} />
-        <CertificateCard name={name} />
-        <CertificateCard name={name} />
-        <CertificateCard name={name} />
+        <div onClick={() => setShowCertificate(true)}>
+          <CertificateCard name={name} />
+        </div>
+        <div onClick={() => setShowCertificate(true)}>
+          <CertificateCard name={name} />
+        </div>
+        <div onClick={() => setShowCertificate(true)}>
+          <CertificateCard name={name} />
+        </div>
+        <div onClick={() => setShowCertificate(true)}>
+          <CertificateCard name={name} />
+        </div>
+        <div onClick={() => setShowCertificate(true)}>
+          <CertificateCard name={name} />
+        </div>
       </CertificatesContainer>
     </>
   );

@@ -6,6 +6,8 @@ import ReactToPrint from 'react-to-print';
 import { useRef } from 'react';
 import certificate from '../../../assets/images/certificateTemplate.jpg';
 import { toast } from 'react-toastify';
+import { Button } from '@material-ui/core';
+import { lightBlue } from '@material-ui/core/colors';
 
 export default function PrintCertificateContainer(props) {
   const componentRef = useRef();
@@ -23,6 +25,7 @@ export default function PrintCertificateContainer(props) {
             }}
             content={() => componentRef.current}
             documentTitle="My Certificate"
+            pageStyle="Document"
             onAfterPrint={() => {
               props.ShowCertificate(false);
             }}
@@ -32,9 +35,25 @@ export default function PrintCertificateContainer(props) {
             <img src={close} width={'20px'} onClick={() => props.ShowCertificate(false)} alt="fechar aba" />
           </div>
         </OptionsBox>
-        <div style={{ background: certificate }} ref={componentRef}>
+        <div ref={componentRef}>
           <PrintableCertificate />
         </div>
+
+        <ReactToPrint
+          trigger={() => {
+            return (
+              <Button style={{ position: 'relative', bottom: '15px', background: 'lightgrey' }}>
+                Imprimir certificado
+              </Button>
+            );
+          }}
+          content={() => componentRef.current}
+          documentTitle="My Certificate"
+          pageStyle="Document"
+          onAfterPrint={() => {
+            props.ShowCertificate(false);
+          }}
+        />
       </WhiteContainer>
     </DarkBackGround>
   );
@@ -45,7 +64,7 @@ const WhiteContainer = styled.div`
   place-self: center;
   width: 1000px;
   background-color: white;
-  height: 650px;
+  height: 690px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -70,4 +89,7 @@ const OptionsBox = styled.div`
   width: 100%;
   padding: 20px 25px;
   margin-bottom: 10px;
+  div {
+    cursor: pointer;
+  }
 `;

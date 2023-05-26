@@ -30,8 +30,6 @@ export default function PrintableCertificates(prop) {
 }
 
 const CertificateContainer = styled.div`
-  background-image: url(certificateTemplate);
-  background-color: blanchedalmond;
   font-family: 'space mono';
   height: 570px;
   width: 840px;
@@ -39,7 +37,15 @@ const CertificateContainer = styled.div`
   border-width: 20px;
   border-color: burlywood;
   border-style: double;
-
+  margin-top: 25px;
+  position: relative;
+  bottom: 25px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   h1 {
     font-size: xx-large;
   }
