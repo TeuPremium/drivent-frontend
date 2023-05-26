@@ -33,7 +33,7 @@ const CertificateContainer = styled.div`
   background-image: url(certificateTemplate);
   background-color: blanchedalmond;
   font-family: 'space mono';
-  height: 580px;
+  height: 570px;
   width: 840px;
   padding: 35px;
   border-width: 20px;

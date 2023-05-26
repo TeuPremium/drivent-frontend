@@ -1,10 +1,22 @@
 import styled from 'styled-components';
 import CertificateCard from './certificateCard';
 import { Typography } from '@material-ui/core';
-import PrintableCertificate from './PrintCertificate';
+
+import { useState } from 'react';
+import PrintCertificateContainer from './printCertificateContainer';
 
 export default function Certificates() {
   const name = 'Worksohop de assembly';
+  const [showCertificate, setShowCertificate] = useState(false);
+  //trocar para certificateData
+  const [user, setUser] = useState('');
+  const [activity, setActivity] = useState('');
+  const [workshop, setWorkshop] = useState('');
+  const [date, setDate] = useState('');
+
+  if (showCertificate) {
+    return <PrintCertificateContainer ShowCertificate={setShowCertificate} />;
+  }
 
   return (
     <>
@@ -12,7 +24,9 @@ export default function Certificates() {
         <StyledTypography>Aqui estão seus certificados: </StyledTypography>
       </div>
       <CertificatesContainer>
-        <CertificateCard name={name} />
+        <div onClick={() => setShowCertificate(true)}>
+          <CertificateCard name={name} />
+        </div>
         <CertificateCard name={name} />
         <CertificateCard name={name} />
         <CertificateCard name={name} />
@@ -32,7 +46,7 @@ export default function Certificates() {
 const CertificatesContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 264px;
+  height: 300px;
   box-sizing: content-box;
   overflow-x: scroll;
   margin-top: 30px;
