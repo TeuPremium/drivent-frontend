@@ -1,12 +1,21 @@
 import styled from 'styled-components';
 import ActivityCard from './ActivityCard';
 
-export default function ActivityLocation({ locationTitle, activities }) {
+export default function ActivityLocation({ locationTitle, activities, selectedDay, setActivities }) {
   return (
     <div>
       <Title>{locationTitle}</Title>
       <Container>
-        {activities && activities.map((a) => <ActivityCard key={a.id} activity={a} noVacancy={!a.openSeats} />)}
+        {activities &&
+          activities.map((a) => (
+            <ActivityCard
+              key={a.id}
+              activity={a}
+              noVacancy={!a.openSeats}
+              selectedDay={selectedDay}
+              setActivities={setActivities}
+            />
+          ))}
       </Container>
     </div>
   );
