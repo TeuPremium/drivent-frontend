@@ -36,7 +36,7 @@ export default function ActivityCard({ activity, noVacancy = false, selectedDay,
       const activitiesData = await getActivities(queryString);
       setActivities(activitiesData);
     } catch (error) {
-      toast('Erro ao modificar atividade');
+      toast('Erro! verifique choque de horários ou tente novamente mais tarde');
     }
   }
 
