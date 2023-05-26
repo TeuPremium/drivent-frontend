@@ -25,6 +25,12 @@ const CardContainer = styled.div`
   border-radius: 5px;
   margin-right: 19px;
   margin-bottom: 19px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 const Container = styled.div`

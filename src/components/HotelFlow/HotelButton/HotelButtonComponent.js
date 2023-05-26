@@ -79,6 +79,12 @@ function buildAccommodationString(rooms) {
 }
 
 const ButtonHotelContainer = styled.div`
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   height: 264px;
   width: 196px;
   background-color: ${(props) => (props.selected ? '#FFEED2' : '#ebebeb')};

@@ -4,13 +4,12 @@ import close from '../../../assets/images/x-symbol-svgrepo-com.svg';
 import print from '../../../assets/images/print-svgrepo-com.svg';
 import ReactToPrint from 'react-to-print';
 import { useRef } from 'react';
-import certificate from '../../../assets/images/certificateTemplate.jpg';
 import { toast } from 'react-toastify';
 import { Button } from '@material-ui/core';
-import { lightBlue } from '@material-ui/core/colors';
 
 export default function PrintCertificateContainer(props) {
   const componentRef = useRef();
+
   return (
     <DarkBackGround>
       <WhiteContainer>
@@ -28,6 +27,7 @@ export default function PrintCertificateContainer(props) {
             pageStyle="Document"
             onAfterPrint={() => {
               props.ShowCertificate(false);
+              toast('Certificado impresso com sucesso! :)');
             }}
           />
 
@@ -52,6 +52,7 @@ export default function PrintCertificateContainer(props) {
           pageStyle="Document"
           onAfterPrint={() => {
             props.ShowCertificate(false);
+            toast('Certificado impresso com sucesso! :)');
           }}
         />
       </WhiteContainer>
