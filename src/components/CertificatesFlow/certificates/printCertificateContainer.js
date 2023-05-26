@@ -2,20 +2,36 @@ import PrintableCertificate from './PrintCertificate';
 import styled from 'styled-components';
 import close from '../../../assets/images/x-symbol-svgrepo-com.svg';
 import print from '../../../assets/images/print-svgrepo-com.svg';
+import ReactToPrint from 'react-to-print';
+import { useRef } from 'react';
+import certificate from '../../../assets/images/certificateTemplate.jpg';
 
 export default function PrintCertificateContainer(props) {
+  const componentRef = useRef();
   return (
     <DarkBackGround>
       <WhiteContainer>
         <OptionsBox>
-          <div>
-            <img src={print} width={'27px'} alt="imprimir certificado" />
-          </div>
+          <ReactToPrint
+            trigger={() => {
+              return (
+                <div>
+                  <img src={print} width={'27px'} alt="imprimir certificado" />
+                </div>
+              );
+            }}
+            content={() => componentRef.current}
+            documentTitle="My Certificate"
+            pageStyle="print"
+          />
+
           <div>
             <img src={close} width={'20px'} onClick={() => props.ShowCertificate(false)} alt="fechar aba" />
           </div>
         </OptionsBox>
-        <PrintableCertificate />
+        <div style={{ background: certificate }} ref={componentRef}>
+          <PrintableCertificate />
+        </div>
       </WhiteContainer>
     </DarkBackGround>
   );
