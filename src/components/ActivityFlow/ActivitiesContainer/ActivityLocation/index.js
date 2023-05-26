@@ -7,13 +7,14 @@ export default function ActivityLocation({ locationTitle, activities, selectedDa
       <Title>{locationTitle}</Title>
       <Container>
         {activities &&
-          activities.map((a) => (
+          activities.map((a, i) => (
             <ActivityCard
               key={a.id}
               activity={a}
               noVacancy={!a.openSeats}
               selectedDay={selectedDay}
               setActivities={setActivities}
+              previousEnd={i !== 0 && activities[i - 1].endsAt}
             />
           ))}
       </Container>
@@ -30,7 +31,6 @@ const Title = styled.p`
 `;
 
 const Container = styled.ul`
-  height: 100px;
   width: 100%;
   height: 390px;
   border: 1px solid #d7d7d7;

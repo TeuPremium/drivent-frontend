@@ -14,3 +14,7 @@ export function getActivityDuration(start, end) {
 
   return diffTimeInMillis / 3600000;
 }
+
+export function getDifferenceBetweenActivities(previous, next) {
+  return getActivityDuration(previous, next);
+}

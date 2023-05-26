@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { AiOutlineCloseCircle, AiOutlineCheckCircle } from 'react-icons/ai';
 import { RiLoginBoxLine } from 'react-icons/ri';
-import { getActivityDuration, getFormatedTime } from '../../../../../utils/dateUtils';
+import { getActivityDuration, getDifferenceBetweenActivities, getFormatedTime } from '../../../../../utils/dateUtils';
 import useToken from '../../../../../hooks/useToken';
 import useActivity from '../../../../../hooks/api/useActivity';
 import { useContext } from 'react';
@@ -9,7 +9,7 @@ import EventInfoContext from '../../../../../contexts/EventInfoContext';
 import { subscribeActivity, unsubscribeActivity } from '../../../../../services/activityApi';
 import { toast } from 'react-toastify';
 
-export default function ActivityCard({ activity, noVacancy = false, selectedDay, setActivities }) {
+export default function ActivityCard({ activity, noVacancy = false, selectedDay, setActivities, previousEnd }) {
   const token = useToken();
   const { getActivities } = useActivity();
   const { eventInfo: event } = useContext(EventInfoContext);
@@ -42,6 +42,7 @@ export default function ActivityCard({ activity, noVacancy = false, selectedDay,
 
   return (
     <Card
+      activityPosition={previousEnd ? getDifferenceBetweenActivities(previousEnd, startsAt) : 0}
       activityDuration={getActivityDuration(startsAt, endsAt)}
       disabled={noVacancy && !subscribedActivity}
       subscribedActivity={subscribedActivity}
@@ -64,6 +65,8 @@ export default function ActivityCard({ activity, noVacancy = false, selectedDay,
 
 const Card = styled.li`
   width: 100%;
+  margin-top: ${({ activityPosition }) => `${activityPosition * 70}px`};
+  margin-bottom: 10px;
   height: ${({ activityDuration = 1 }) => `${activityDuration * 80}px`};
   background-color: ${({ subscribedActivity }) => (subscribedActivity ? '#D0FFDB' : '#f1f1f1')};
   border: 0px solid transparent;
@@ -71,9 +74,9 @@ const Card = styled.li`
   padding: 10px 0 10px 10px;
   display: flex;
   transition: all 150ms;
-  margin-bottom: 6px;
   &:hover {
-    background-color: ${({ disabled, subscribedActivity }) => !disabled && subscribedActivity ? '#fadce5' : '#e7e7e7'};
+    background-color: ${({ disabled, subscribedActivity }) =>
+    !disabled && subscribedActivity ? '#fadce5' : '#e7e7e7'};
   }
 `;
 
