@@ -23,6 +23,7 @@ export default function ActivityLocation({ activities, selectedDay, setActivitie
 
 const Container = styled.ul`
   width: 100%;
+  min-height: 390px;
   height: 100%;
   border-left: 1px solid #d7d7d7;
   border-right: 1px solid #d7d7d7;
