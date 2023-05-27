@@ -39,17 +39,26 @@ export default function ActivitiesContainer() {
       <DaysContainer selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
 
       {selectedDay && activities ? (
-        <Container>
-          {activityLocations.map(({ id, name }) => (
-            <ActivityLocation
-              key={id}
-              locationTitle={name}
-              activities={activities[id]}
-              selectedDay={selectedDay}
-              setActivities={setActivities}
-            />
-          ))}
-        </Container>
+        <>
+          <Container>
+            {activityLocations.map(({ id, name }) => (
+              <Title key={id}>{name}</Title>
+            ))}
+          </Container>
+          <ActivityBox>
+            <Container>
+              {activityLocations.map(({ id, name }) => (
+                <ActivityLocation
+                  key={id}
+                  locationTitle={name}
+                  activities={activities[id]}
+                  selectedDay={selectedDay}
+                  setActivities={setActivities}
+                />
+              ))}
+            </Container>
+          </ActivityBox>
+        </>
       ) : (
         <></>
       )}
@@ -62,9 +71,30 @@ const Container = styled.div`
   grid-template-columns: repeat(3, minmax(100px, 1fr));
 `;
 
-/*
+const Title = styled.p`
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  color: #8e8e8e;
+  text-align: center;
+  margin-bottom: 12px;
+`;
 
-ticketLoading || enrollmentLoading || ticketTypesLoading ? (
-    <LoadingContainer />
-  ) : (
-*/
+const ActivityBox = styled.div`
+  overflow-y: auto;
+  height: 390px;
+  border-bottom: 1px solid #d7d7d7;
+  border-top: 1px solid #d7d7d7;
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: red;
+    border-radius: 15px;
+    min-height: 30px;
+    overflow: auto;
+    border: 6px solid transparent;
+    background-clip: padding-box;
+    transition: height 0.2s ease-in-out;
+  }
+`;

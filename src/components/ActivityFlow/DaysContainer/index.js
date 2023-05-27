@@ -55,7 +55,7 @@ const Container = styled.div`
   overflow-x: auto;
   scrollbar-width: thin;
   scrollbar-color: #e8e8e8 transparent;
-
+  margin-bottom: 20px;
   &::-webkit-scrollbar {
     width: 20px;
   }
