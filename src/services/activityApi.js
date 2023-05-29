@@ -23,3 +23,9 @@ export async function unsubscribeActivity(activityId, token) {
 
   return response.data;
 }
+
+export async function myActivities(token) {
+  const response = await api.get('/activities/myActivities', authorization(token));
+
+  return response.data;
+}
