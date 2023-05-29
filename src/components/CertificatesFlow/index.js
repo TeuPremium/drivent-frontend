@@ -13,10 +13,6 @@ export default function CertificatesFlow() {
       <Typography variant="h4">Meus Certificados</Typography>
       {ticket?.status !== 'PAID' ? (
         <NoContentCard text={'Você precisa ter confirmado pagamento antes de fazer a escolha de atividades'} />
-      ) : ticket.TicketType?.fullActivityAccess ? (
-        <NoContentCard
-          text={'Sua modalidade de ingresso não necessita escolher atividade. Você terá acesso a todas as atividades.'}
-        />
       ) : (
         <Certificates activities={activity} />
       )}

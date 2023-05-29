@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 import ActivityCard from './ActivityCard';
 
-export default function ActivityLocation({ locationTitle, activities, selectedDay, setActivities }) {
+export default function ActivityLocation({ activities, selectedDay, setActivities }) {
   return (
     <div>
-      <Title>{locationTitle}</Title>
       <Container>
         {activities &&
-          activities.map((a) => (
+          activities.map((a, i) => (
             <ActivityCard
               key={a.id}
               activity={a}
               noVacancy={!a.openSeats}
               selectedDay={selectedDay}
               setActivities={setActivities}
+              previousEnd={i !== 0 && activities[i - 1].endsAt}
             />
           ))}
       </Container>
@@ -21,32 +21,11 @@ export default function ActivityLocation({ locationTitle, activities, selectedDa
   );
 }
 
-const Title = styled.p`
-  font-family: 'Roboto', sans-serif;
-  font-size: 20px;
-  color: #8e8e8e;
-  text-align: center;
-  margin-bottom: 12px;
-`;
-
 const Container = styled.ul`
-  height: 100px;
   width: 100%;
-  height: 390px;
-  border: 1px solid #d7d7d7;
+  min-height: 390px;
+  height: 100%;
+  border-left: 1px solid #d7d7d7;
+  border-right: 1px solid #d7d7d7;
   padding: 9px;
-  overflow-y: auto;
-  ::-webkit-scrollbar {
-    width: 0px;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: red;
-    border-radius: 15px;
-    min-height: 30px;
-    overflow: auto;
-    border: 6px solid transparent;
-    background-clip: padding-box;
-    transition: height 0.2s ease-in-out;
-  }
 `;

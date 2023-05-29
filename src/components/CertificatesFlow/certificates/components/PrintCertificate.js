@@ -6,17 +6,17 @@ export default function PrintableCertificates(prop) {
     <>
       <CertificateContainer>
         <Head>
-          <h1>Certificado de participação da atividade {prop.activity} </h1>
+          <h1>Certificado de participação da atividade {prop.activity}. </h1>
         </Head>
         <Body>
           <h2>
-            Certificamos que {prop.user} completou com êxito o workshop {prop.workshop}
+            Certificamos que {prop.user} completou com êxito o workshop {prop.activity}.
           </h2>
         </Body>
         <Identifiers>
           <div>
             <h3>Identificador:</h3>
-            <h3>placeholder aaa{prop.id}</h3>
+
             <img src={qrCode} alt={'qrcode'} width={'135px'} />
           </div>
           <div>
@@ -65,7 +65,8 @@ const Body = styled.div`
 `;
 
 const Identifiers = styled.div`
-  margin-top: 100px;
+  position: relative;
+  top: 85px;
   display: flex;
   justify-content: space-between;
   padding-right: 50px;

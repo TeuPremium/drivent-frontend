@@ -4,15 +4,12 @@ import { Button, Typography } from '@material-ui/core';
 
 import { useState } from 'react';
 import PrintCertificateContainer from './components/printCertificateContainer';
+import useEnrollment from '../../../hooks/api/useEnrollment';
 
 export default function Certificates({ activities }) {
-  const name = 'Worksohop de assembly';
   const [showCertificate, setShowCertificate] = useState(false);
-  //trocar para certificateData
-  // const [user, setUser] = useState('');
-  // const [activity, setActivity] = useState('');
-  // const [workshop, setWorkshop] = useState('');
-  // const [date, setDate] = useState('');
+  const [chosenCertificate, setChosenCertificate] = useState();
+  const { enrollment } = useEnrollment();
 
   const handleWheelScroll = (event) => {
     const container = event.currentTarget;
@@ -21,33 +18,32 @@ export default function Certificates({ activities }) {
   };
 
   if (showCertificate) {
-    return <PrintCertificateContainer ShowCertificate={setShowCertificate} />;
+    return (
+      <PrintCertificateContainer
+        enrollment={enrollment}
+        activity={chosenCertificate}
+        ShowCertificate={setShowCertificate}
+      />
+    );
   }
 
+  if (!activities) return <></>;
   return (
     <>
       <div>
         <StyledTypography>Aqui estão seus certificados: </StyledTypography>
       </div>
       <CertificatesContainer onWheel={handleWheelScroll}>
-        <div onClick={() => setShowCertificate(true)}>
-          <CertificateCard name={name} />
-        </div>
-        <div onClick={() => setShowCertificate(true)}>
-          <CertificateCard name={name} />
-        </div>
-        <div onClick={() => setShowCertificate(true)}>
-          <CertificateCard name={name} />
-        </div>
-        <div onClick={() => setShowCertificate(true)}>
-          <CertificateCard name={name} />
-        </div>
-        <div onClick={() => setShowCertificate(true)}>
-          <CertificateCard name={name} />
-        </div>
-        <div onClick={() => setShowCertificate(true)}>
-          <CertificateCard name={name} />
-        </div>
+        {activities.map((activity) => (
+          <div
+            onClick={() => {
+              setShowCertificate(true);
+              setChosenCertificate(activity.name);
+            }}
+          >
+            <CertificateCard name={activity.name} />
+          </div>
+        ))}
       </CertificatesContainer>
       <ConfirmActivities>
         <Button onClick={() => alert('funcionalidade será implementada em breve')} style={{ background: 'lightgrey' }}>

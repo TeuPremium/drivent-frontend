@@ -9,6 +9,7 @@ import { Button } from '@material-ui/core';
 
 export default function PrintCertificateContainer(props) {
   const componentRef = useRef();
+  const { name } = props.enrollment;
 
   return (
     <DarkBackGround>
@@ -36,7 +37,7 @@ export default function PrintCertificateContainer(props) {
           </div>
         </OptionsBox>
         <div ref={componentRef}>
-          <PrintableCertificate />
+          <PrintableCertificate user={name} activity={props.activity} />
         </div>
 
         <ReactToPrint
