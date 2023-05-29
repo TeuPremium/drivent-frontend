@@ -68,6 +68,12 @@ const ButtonHotelContainer = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 `;
 
 const ImageHotelContainer = styled.div`

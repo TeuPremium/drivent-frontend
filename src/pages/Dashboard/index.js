@@ -32,4 +32,19 @@ const Container = styled.div`
     height: calc(100vh - 80px);
     padding: 20px;
   }
+
+  ::-webkit-scrollbar {
+    width: 20px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 15px;
+    min-height: 30px;
+    overflow: auto;
+    border: 0.5rem solid transparent;
+    background-clip: padding-box;
+    transition: height 0.2s ease-in-out;
+    padding: 5px;
+  }
 `;
