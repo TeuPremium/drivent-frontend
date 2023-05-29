@@ -1,20 +1,23 @@
 import { Typography } from '@material-ui/core';
 import Certificates from './certificates/certificates';
 import useMyActivities from '../../hooks/api/useMyActivities';
-import useTicket from '../../hooks/api/useTicket';
 import { NoContentCard } from '../NoContentCard';
+import useBooking from '../../hooks/api/useBookings';
 
 export default function CertificatesFlow() {
   const { activity } = useMyActivities();
-  const { ticket } = useTicket();
-
+  const { Bookings } = useBooking();
   return (
     <>
       <Typography variant="h4">Meus Certificados</Typography>
-      {ticket?.status !== 'PAID' ? (
-        <NoContentCard text={'Você precisa ter confirmado pagamento antes de fazer a escolha de atividades'} />
+      {Bookings ? (
+        activity ? (
+          <Certificates activities={activity} />
+        ) : (
+          <NoContentCard text={'Você precisa estar cadastrado nas atividades para ver seus certificados'} />
+        )
       ) : (
-        <Certificates activities={activity} />
+        <NoContentCard text={'Você precisa estar hospedado para ver seus certificados'} />
       )}
     </>
   );
