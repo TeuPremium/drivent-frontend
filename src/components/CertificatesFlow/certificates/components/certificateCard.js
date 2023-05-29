@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import certificate from '../../../../assets/images/istockphoto-1316195221-612x612.jpg';
 
 export default function CertificateCard(prop) {
   const { name } = prop;
@@ -7,7 +8,7 @@ export default function CertificateCard(prop) {
     <Container>
       <CardContainer>
         <CertificateImageContainer>
-          <img src="https://cdn-icons-png.flaticon.com/512/7238/7238706.png" alt="certificate icon" />
+          <img src={certificate} alt="certificate icon" />
         </CertificateImageContainer>
         <SubtitlesContainer>
           <h2>Evento certificado:</h2>
@@ -46,9 +47,10 @@ const CertificateImageContainer = styled.div`
   margin-left: 14px;
   img {
     width: 168px;
-    height: 109px;
+    height: 130px;
     padding-top: 16px;
     border-radius: 5px;
+    object-fit: cover;
   }
 `;
 
@@ -58,6 +60,7 @@ const SubtitlesContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 15px;
+  margin-top: 20px;
   h1 {
     font-size: 20px;
     font-weight: 400;

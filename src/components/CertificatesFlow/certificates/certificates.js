@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import CertificateCard from './certificateCard';
+import CertificateCard from './components/certificateCard';
 import { Button, Typography } from '@material-ui/core';
 
 import { useState } from 'react';
-import PrintCertificateContainer from './printCertificateContainer';
+import PrintCertificateContainer from './components/printCertificateContainer';
 import useActivity from '../../../hooks/api/useActivity';
 
 export default function Certificates({ activities }) {
@@ -52,7 +52,9 @@ export default function Certificates({ activities }) {
         </div>
       </CertificatesContainer>
       <ConfirmActivities>
-        <Button style={{ background: 'lightgrey' }}>Confirmar atividades</Button>
+        <Button onClick={() => alert('funcionalidade será implementada em breve')} style={{ background: 'lightgrey' }}>
+          Confirmar atividades
+        </Button>
       </ConfirmActivities>
     </>
   );

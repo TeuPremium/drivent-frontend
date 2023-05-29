@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import qrCode from '../../../assets/images/qrCode.svg';
+import qrCode from '../../../../assets/images/qrCode.svg';
 
 export default function PrintableCertificates(prop) {
   return (

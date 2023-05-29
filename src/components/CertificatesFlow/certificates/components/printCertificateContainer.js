@@ -1,7 +1,7 @@
 import PrintableCertificate from './PrintCertificate';
 import styled from 'styled-components';
-import close from '../../../assets/images/x-symbol-svgrepo-com.svg';
-import print from '../../../assets/images/print-svgrepo-com.svg';
+import close from '../../../../assets/images/x-symbol-svgrepo-com.svg';
+import print from '../../../../assets/images/print-svgrepo-com.svg';
 import ReactToPrint from 'react-to-print';
 import { useRef } from 'react';
 import { toast } from 'react-toastify';
