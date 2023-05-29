@@ -37,7 +37,7 @@ export default function PrintCertificateContainer(props) {
           </div>
         </OptionsBox>
         <div ref={componentRef}>
-          <PrintableCertificate user={name} activity={props.activity} />
+          <PrintableCertificate date={props.date} user={name} activity={props.activity} />
         </div>
 
         <ReactToPrint

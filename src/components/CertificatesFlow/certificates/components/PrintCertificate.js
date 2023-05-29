@@ -21,7 +21,7 @@ export default function PrintableCertificates(prop) {
           </div>
           <div>
             <h3>Data:</h3>
-            <h3>24/05/2023{prop.date}</h3>
+            <h3>{prop.date}</h3>
           </div>
         </Identifiers>
       </CertificateContainer>

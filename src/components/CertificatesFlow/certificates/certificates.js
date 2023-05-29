@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import CertificateCard from './components/certificateCard';
 import { Button, Typography } from '@material-ui/core';
-
+import dayjs from 'dayjs';
 import { useState } from 'react';
 import PrintCertificateContainer from './components/printCertificateContainer';
 import useEnrollment from '../../../hooks/api/useEnrollment';
@@ -18,10 +18,12 @@ export default function Certificates({ activities }) {
   };
 
   if (showCertificate) {
+    const date = dayjs(chosenCertificate.startsAt).format('DD/MM/YYYY');
     return (
       <PrintCertificateContainer
+        date={date}
         enrollment={enrollment}
-        activity={chosenCertificate}
+        activity={chosenCertificate.name}
         ShowCertificate={setShowCertificate}
       />
     );
@@ -38,7 +40,7 @@ export default function Certificates({ activities }) {
           <div
             onClick={() => {
               setShowCertificate(true);
-              setChosenCertificate(activity.name);
+              setChosenCertificate(activity);
             }}
           >
             <CertificateCard name={activity.name} />
